@@ -1,0 +1,5 @@
+Django==1.4.2
+South==0.7.6
+django-mptt
+django-debug-toolbar
+django-bootstrap-toolkit

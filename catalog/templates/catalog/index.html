@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %} {{ current_category }} {% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="span3">
+            {% include "catalog/block/categories.html" %}
+        </div>
+        <div class="span9">{% include "catalog/block/carousel.html" %}</div>
+        <div class="span7 popular_products">
+            <h4>Popular products</h4><br/>
+            {% if product_list %}
+                <ul class="thumbnails">
+                    {% for product in product_list %}
+                        <li class="span2">
+                            <div class="thumbnail">
+                                <a href="product.html"><img alt="" src="http://wbpreview.com/previews/WB00223R0/css/images/ps-vita-150cx123.jpg"/></a>
+
+                                <div class="caption">
+                                    <a href="{% url catalog.views.product product %}"><h5>{{ product }}</h5></a> Price:
+                                    &#36;50.00<br/><br/>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        </div>
+        <div class="span2">
+
+            <div class="roe">
+                <h4>Newsletter</h4><br/>
+
+                <p>Sign up for our weekly newsletter and stay up-to-date with the latest offers, and newest
+                    products.</p>
+
+                <form class="form-search">
+                    <input type="text" class="span2" placeholder="Enter your email"/><br/><br/>
+                    <button type="submit" class="btn pull-right">Subscribe</button>
+                </form>
+            </div>
+            <br/><br/>
+            <a href="#"><img alt="" title="" src="http://wbpreview.com/previews/WB00223R0/css/images/paypal_mc_visa_amex_disc_150x139.gif"/></a>
+            <a href="#"><img alt="" src="http://wbpreview.com/previews/WB00223R0/css/images/bnr_nowAccepting_150x60.gif"/></a>
+        </div>
+    </div>
+{% endblock %}

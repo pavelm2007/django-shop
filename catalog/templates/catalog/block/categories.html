@@ -1,0 +1,20 @@
+{% load mptt_tags %}
+<!-- start sidebar -->
+<ul class="breadcrumb">
+    <li>Categories</li>
+</ul>
+<div class="span3 product_list">
+    <ul class="nav">
+        {% recursetree nodes %}
+            <li>
+                <a {% if not node.is_leaf_node %} class="active" {% endif %} href="{% url catalog.views.category node %}">{{ node.name }} ({{ node.product_counts }})</a>
+                {% if not node.is_leaf_node %}
+                    <ul>
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
+    </ul>
+</div>
+<!-- end sidebar -->
