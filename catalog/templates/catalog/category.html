@@ -11,8 +11,8 @@
                 {% for product in product_list %}
                     <div class="row">
                         <div class="span1">
-                            <a href="{% url catalog.views.product product %}"><img alt=""
-                                                                                   src="css/images/ipodtouch_image2_20080909.jpg"></a>
+                            <a href="{% url catalog.views.product product %}"><img alt="{{ product }}"
+                                                                                   src="http://placehold.it/60x60"></a>
                         </div>
 
                         <div class="span6">
