@@ -11,12 +11,12 @@
                 {% for product in product_list %}
                     <div class="row">
                         <div class="span1">
-                            <a href="{% url catalog.views.product product %}"><img alt="{{ product }}"
+                            <a href="{% url catalog.views.product product.slug %}"><img alt="{{ product }}"
                                                                                    src="http://placehold.it/60x60"></a>
                         </div>
 
                         <div class="span6">
-                            <a href="{% url catalog.views.product product %}"><h5>{{ product }}</h5></a>
+                            <a href="{% url catalog.views.product product.slug %}"><h5>{{ product }}</h5></a>
 
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
                         </div>

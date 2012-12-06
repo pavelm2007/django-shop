@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'catalog',
     'compare',
     'cart',
+    'theme'
 )
 
 # A sample logging configuration. The only tangible logging

@@ -4,7 +4,7 @@
     </li>
     {% for node in current_category.get_ancestors %}
         <li>
-            <a href="{% url catalog.views.category node %}">{{ node }}</a> <span class="divider">/</span>
+            <a href="{% url catalog.views.category node.slug %}">{{ node }}</a> <span class="divider">/</span>
         </li>
     {% endfor %}
     <li class="active">

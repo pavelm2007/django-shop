@@ -16,7 +16,7 @@ def index(request):
     )
 
 
-def category(request, category_id):
+def category(request, category_slug):
     categories = Category.objects.add_related_count(
         Category.tree.all(),
         Product,
@@ -25,10 +25,10 @@ def category(request, category_id):
     );
 
     try:
-        current_category = categories.get(name=category_id)
+        current_category = categories.get(slug=category_slug)
         descendants = current_category.get_descendants(include_self=True)
     except ObjectDoesNotExist:
-        print("Either the category doesn't exist." + category_id)
+        print("Either the category doesn't exist." + category_slug)
 
     if settings.DEBUG:
         print " === Category page: " + current_category.__unicode__();
@@ -43,7 +43,7 @@ def category(request, category_id):
     )
 
 
-def product(request, product_id):
+def product(request, product_slug):
     categories = Category.objects.add_related_count(
         Category.tree.all(),
         Product,
@@ -52,7 +52,7 @@ def product(request, product_id):
     );
 
     # looking for a product
-    p = get_object_or_404(Product, name=product_id)
+    p = get_object_or_404(Product, slug=product_slug)
 
     if settings.DEBUG:
         print " === Product page: " + p.__unicode__();

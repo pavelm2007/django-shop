@@ -7,7 +7,7 @@
     <ul class="nav">
         {% recursetree nodes %}
             <li>
-                <a {% if not node.is_leaf_node %} class="active" {% endif %} href="{% url catalog.views.category node %}">{{ node.name }} ({{ node.product_counts }})</a>
+                <a {% if not node.is_leaf_node %} class="active" {% endif %} href="{% url catalog.views.category node.slug %}">{{ node.name }} ({{ node.product_counts }})</a>
                 {% if not node.is_leaf_node %}
                     <ul>
                         {{ children }}

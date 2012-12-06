@@ -13,10 +13,10 @@
                     {% for product in product_list %}
                         <li class="span2">
                             <div class="thumbnail">
-                                <a href="product.html"><img alt="" src="http://placehold.it/150x123"/></a>
+                                <a href="{% url catalog.views.product product.slug %}"><img alt="" src="http://placehold.it/150x123"/></a>
 
                                 <div class="caption">
-                                    <a href="{% url catalog.views.product product %}"><h5>{{ product }}</h5></a> Price:
+                                    <a href="{% url catalog.views.product product.slug %}"><h5>{{ product }}</h5></a> Price:
                                     &#36;50.00<br/><br/>
                                 </div>
                             </div>
