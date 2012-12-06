@@ -11,12 +11,12 @@
 {#        {% bootstrap_stylesheet_tag %}#}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
-    <link href="{{ STATIC_URL }}css/bootstrap/bootstrap.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/bootstrap/united.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/jquery.rating.css" rel="stylesheet">
-    <script src="{{ STATIC_URL }}js/bootstrap/bootstrap.js"></script>
-    <script src="{{ STATIC_URL }}js/jquery.rating.pack.js"></script>
+    <link href="{{ STATIC_URL }}theme/css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}theme/css/bootstrap/united.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}theme/css/main.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}theme/css/jquery.rating.css" rel="stylesheet">
+    <script src="{{ STATIC_URL }}theme/js/bootstrap/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}theme/js/jquery.rating.pack.js"></script>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -85,14 +85,14 @@
                                     {% if not node.is_leaf_node %}
                                         <li class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown"
-                                               href="{% url catalog.views.category node %}">{{ node.name }} <b
+                                               href="{% url catalog.views.category node.slug %}">{{ node.name }} <b
                                                     class="caret"></b> </a>
                                             <ul class="dropdown-menu">
                                                 {{ children }}
                                             </ul>
                                         </li>
                                     {% else %}
-                                        <li><a href="{% url catalog.views.category node %}">{{ node.name }}</a></li>
+                                        <li><a href="{% url catalog.views.category node.slug %}">{{ node.name }}</a></li>
                                     {% endif %}
                                 {% endrecursetree %}
                             </ul>
