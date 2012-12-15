@@ -185,6 +185,7 @@ if DEBUG:
         'INTERCEPT_REDIRECTS': False,
         }
 
+# include local_setting.py - for production
 try:
     from local_settings import *
 except ImportError:
