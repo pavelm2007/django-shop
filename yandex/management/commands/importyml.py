@@ -30,8 +30,8 @@ class Command(BaseCommand):
 
         for file in args:
             try:
-                if settings.DEBUG:
-                    file = '/Users/alexzaporozhets/Downloads/records.xml';
+#                if settings.DEBUG:
+#                    file = '/Users/alexzaporozhets/Downloads/records.xml';
                 tree = ET.parse(file)
 
             except ET.ParseError:
