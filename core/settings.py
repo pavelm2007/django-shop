@@ -22,6 +22,13 @@ DATABASES = {
     }
 }
 
+#  Amazon SES - sandbox
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+EMAIL_HOST_USER = 'AKIAJOIUBQWCY3VCTBYA'
+EMAIL_HOST_PASSWORD = 'AouEKFoTFdGOSMpWp6inXMzsBEnREdwp/jj/BlVq6lsN'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -126,9 +133,16 @@ INSTALLED_APPS = (
     'catalog',
     'compare',
     'cart',
-    'theme'
+    'theme',
+    'yandex'
 )
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+        }
+}
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

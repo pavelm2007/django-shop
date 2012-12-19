@@ -11,8 +11,13 @@
                 {% for product in product_list %}
                     <div class="row">
                         <div class="span1">
-                            <a href="{% url catalog.views.product product.slug %}"><img alt="{{ product }}"
-                                                                                   src="http://placehold.it/60x60"></a>
+                            <a href="{% url catalog.views.product product.slug %}">
+                                {% if product.image %}
+                                    <img alt="{{ product }}" src="{{ MEDIA_URL }}{{ product.image }}">
+                                {% else %}
+                                    <img alt="{{ product }}" src="http://placehold.it/60x60">
+                                {% endif %}
+                            </a>
                         </div>
 
                         <div class="span6">
@@ -36,18 +41,31 @@
                     <hr/>
                 {% endfor %}
 
-                <div class="pagination">
-                    <ul>
-                        <li><a href="#">Prev</a></li>
-                        <li class="active">
-                            <a href="#">1</a>
-                        </li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
-                </div>
+                {% ifnotequal product_list.paginator.num_pages 1 %}
+
+                    <div class="pagination">
+                        <ul>
+                            {% if product_list.has_previous %}
+                                <li><a href="?page={{ product_list.previous_page_number }}">Prev</a></li>
+                            {% endif %}
+
+                            {% for page in product_list.paginator.page_range %}
+                                {% ifequal page product_list.number %}
+                                    <!-- Do something special for this page -->
+                                    <li class="active"><a href="#">{{ page }}</a></li>
+                                {% else %}
+                                    <!-- All the other pages -->
+                                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                                {% endifequal %}
+                            {% endfor %}
+
+                            {% if product_list.has_next %}
+                                <li><a href="?page={{ product_list.next_page_number }}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endifnotequal %}
+
             {% else %}
                 <p>No products are available.</p>
             {% endif %}

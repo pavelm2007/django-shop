@@ -8,6 +8,6 @@
         </li>
     {% endfor %}
     <li class="active">
-        <a href="{% url catalog.views.category current_category %}">{{ current_category.name }}</a>
+        <a href="{% url catalog.views.category current_category.slug %}">{{ current_category.name }}</a>
     </li>
 </ul>
