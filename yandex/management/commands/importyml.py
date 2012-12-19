@@ -4,6 +4,7 @@ from optparse import make_option
 from catalog.models import Product, Category
 import urllib2, urlparse
 from django.core.files.base import ContentFile
+from django.conf import settings
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
@@ -29,7 +30,8 @@ class Command(BaseCommand):
 
         for file in args:
             try:
-                file = '/Users/alexzaporozhets/Downloads/records.xml';
+                if settings.DEBUG:
+                    file = '/Users/alexzaporozhets/Downloads/records.xml';
                 tree = ET.parse(file)
 
             except ET.ParseError:
