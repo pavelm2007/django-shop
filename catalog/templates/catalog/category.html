@@ -9,29 +9,29 @@
             {% include "catalog/block/breadcrumb.html" %}
             {% if product_list %}
                 {% for product in product_list %}
-                    <div class="row">
+                    <div class="row simpleCart_shelfItem">
                         <div class="span1">
                             <a href="{% url catalog.views.product product.slug %}">
                                 {% if product.image %}
-                                    <img alt="{{ product }}" src="{{ MEDIA_URL }}{{ product.image }}">
+                                    <img class="item_image" alt="{{ product }}" src="{{ MEDIA_URL }}{{ product.image }}">
                                 {% else %}
-                                    <img alt="{{ product }}" src="http://placehold.it/60x60">
+                                    <img class="item_image" alt="{{ product }}" src="http://placehold.it/60x60">
                                 {% endif %}
                             </a>
                         </div>
 
                         <div class="span6">
-                            <a href="{% url catalog.views.product product.slug %}"><h5>{{ product }}</h5></a>
+                            <a href="{% url catalog.views.product product.slug %}"><h5 class="item_name">{{ product }}</h5></a>
 
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
                         </div>
 
-                        <div class="span1">
+                        <div class="span1 item_price">
                             <p>$587.50</p>
                         </div>
 
                         <div class="span2">
-                            <p><a class="btn btn-primary" href="cart.html">Add to cart</a></p>
+                            <p><a class="btn btn-primary item_add" href="javascript:;">Add to cart</a></p>
 
                             <p><a class="" href="#">Add to Wish List</a></p>
 
