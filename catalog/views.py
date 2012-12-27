@@ -11,14 +11,14 @@ def index(request):
     return render_to_response(
         'catalog/index.html',
         {
-            'product_list': Product.objects.all()[:9],
-            'nodes': Category.objects.exclude(count_products=0).all()
+            'product_list': Product.objects.filter(hidden=False)[:9],
+            'nodes': Category.objects.exclude(hidden=True).exclude(count_products=0).all()
         }
     )
 
 
 def category(request, category_slug):
-    categories = Category.objects.exclude(count_products=0).all()
+    categories = Category.objects.exclude(hidden=True).exclude(count_products=0).all()
 
     try:
         current_category = categories.get(slug=category_slug)
@@ -56,7 +56,7 @@ def category(request, category_slug):
 
 
 def product(request, product_slug):
-    categories = Category.objects.exclude(count_products=0).all()
+    categories = Category.objects.exclude(hidden=True).exclude(count_products=0).all()
 
     # looking for a product
     p = get_object_or_404(Product, slug=product_slug)

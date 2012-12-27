@@ -8,6 +8,7 @@ class Category(MPTTModel):
     description = models.TextField(default="")
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True)
+    hidden = models.BooleanField(default=False)
     count_products = models.IntegerField(default=0)
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -32,6 +33,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="product/", null=True, blank=True)
     SKU = models.CharField(max_length=64, default="")
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True)
+    hidden = models.BooleanField(default=False)
     price = models.IntegerField()
 
     def __unicode__(self):
