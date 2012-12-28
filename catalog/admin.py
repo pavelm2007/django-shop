@@ -8,7 +8,7 @@ class OptionMPTTModelAdmin(MPTTModelAdmin):
 
 class CategoryMPTTModelAdmin(MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
-    list_display = ('name', 'slug', 'count_products')
+    list_display = ('name', 'slug', 'is_active', 'count_products')
     mptt_level_indent = 20
 
 

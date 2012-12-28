@@ -16,10 +16,16 @@ class Category(MPTTModel):
     hidden = models.BooleanField(default=False)
     count_products = models.IntegerField(default=0)
     # managers
+    object = models.Manager()
     active = CategoryManager()
 
     class MPTTMeta:
         order_insertion_by = ['name']
+
+    def is_active(self):
+        return self.count_products > 0 and self.hidden is False
+    is_active.boolean = True
+    is_active.short_description = 'Active'
 
     def __unicode__(self):
         return self.name
