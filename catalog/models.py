@@ -10,7 +10,7 @@ class CategoryManager(models.Manager):
 # Create your models here.
 class Category(MPTTModel):
     name = models.CharField(max_length=255)
-    description = models.TextField(default="")
+    description = models.TextField(default="", blank=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True)
     hidden = models.BooleanField(default=False)
