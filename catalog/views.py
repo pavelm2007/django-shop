@@ -11,7 +11,7 @@ def index(request):
     return render_to_response(
         'catalog/index.html',
         {
-            'product_list': Product.objects.filter(hidden=False)[:9],
+            'product_list': Product.objects.filter()[:9],
             'nodes': Category.active.all()
         },
         context_instance=RequestContext(request)
