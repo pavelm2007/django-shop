@@ -7,6 +7,6 @@ def index(request):
         'cart/index.html',
         {
             'product_list': Product.objects.all(),
-            'nodes': Category.objects.exclude(count_products=0).all()
+            'nodes': Category.active.all()
         }
     )
