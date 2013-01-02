@@ -41,11 +41,11 @@ class Option(MPTTModel):
 
 class Product(models.Model):
     category = TreeForeignKey('Category', null=True, blank=False)
-    option = TreeManyToManyField('Option')
+    option = TreeManyToManyField('Option', blank=True)
     name = models.CharField(max_length=255)
     description = models.TextField(default="")
     image = models.ImageField(upload_to="product/", null=True, blank=True)
-    SKU = models.CharField(max_length=64, default="")
+    SKU = models.CharField(max_length=64, default="", blank=True)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True)
     hidden = models.BooleanField(default=False)
     price = models.IntegerField()
