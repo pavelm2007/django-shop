@@ -13,7 +13,8 @@ def index(request):
         {
             'product_list': Product.objects.filter(hidden=False)[:9],
             'nodes': Category.active.all()
-        }
+        },
+        context_instance=RequestContext(request)
     )
 
 

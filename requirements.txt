@@ -5,3 +5,4 @@ django-debug-toolbar
 django-bootstrap-toolkit
 django-autoslug
 pytils
+sorl-thumbnail

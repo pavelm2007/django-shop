@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'mptt',
     'south',
+    'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'bootstrap_toolkit',
@@ -174,6 +175,7 @@ LOGGING = {
     }
 }
 
+THUMBNAIL_DEBUG = True
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1')
 
