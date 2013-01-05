@@ -102,8 +102,14 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+from django.conf import global_settings
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    "utils.context_processors.catalog",
 )
 
 ROOT_URLCONF = 'core.urls'
@@ -127,17 +133,20 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
-    'mptt',
-    'south',
-    'sorl.thumbnail',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'django.contrib.flatpages',
+    'mptt',
+    'south',
+    'utils',
+    'sorl.thumbnail',
     'bootstrap_toolkit',
     'catalog',
     'compare',
     'cart',
     'theme',
-    'yandex'
+    'yandex',
+    'imperavi'
 )
 
 CACHES = {

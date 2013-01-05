@@ -1,6 +1,8 @@
 from catalog.models import Product, Category, Option
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
+from imperavi.admin import ImperaviAdmin
+from imperavi.admin import ImperaviStackedInlineAdmin
 
 class OptionMPTTModelAdmin(MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
@@ -12,6 +14,8 @@ class CategoryMPTTModelAdmin(MPTTModelAdmin):
     list_display = ('name', 'slug', 'is_active', 'count_products')
     mptt_level_indent = 20
     actions = ['hide_category', 'un_hide_category']
+    # sets up slug to be generated from category name
+    prepopulated_fields = {'slug' : ('name',)}
 
     def hide_category(self, request, queryset):
         rows_updated = queryset.update(hidden=True)
@@ -32,9 +36,14 @@ class CategoryMPTTModelAdmin(MPTTModelAdmin):
     un_hide_category.short_description = "Mark selected as active"
     hide_category.short_description = "Mark selected as hidden"
 
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'price')
-    search_fields = ['slug', 'price']
+class ProductAdmin(ImperaviAdmin):
+    list_display = ('name', 'price', 'old_price', 'created_at', 'updated_at',)
+    list_display_links = ('name',)
+    list_per_page = 50
+    search_fields = ['name', 'description', 'meta_keywords', 'meta_description']
+
+    # sets up slug to be generated from product name
+    prepopulated_fields = {'slug' : ('name',)}
 
 admin.site.register(Product, ProductAdmin)
 

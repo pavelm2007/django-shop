@@ -6,3 +6,4 @@ django-bootstrap-toolkit
 django-autoslug
 pytils
 sorl-thumbnail
+django-imperavi

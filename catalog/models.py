@@ -65,9 +65,9 @@ class Product(models.Model):
     old_price = models.DecimalField(max_digits=9, decimal_places=2, blank=True, default=0.00)
 
     is_active = models.BooleanField(default=True)
-    meta_keywords = models.CharField("Meta Keywords", max_length=255, default="",
+    meta_keywords = models.CharField("Meta Keywords", max_length=255, default="", blank=True,
         help_text='Comma-delimited set of SEO keywords for meta tag')
-    meta_description = models.CharField("Meta Description", max_length=255, default="",
+    meta_description = models.CharField("Meta Description", max_length=255, default="", blank=True,
         help_text='Content for description meta tag')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

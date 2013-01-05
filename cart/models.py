@@ -10,8 +10,8 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    name = models.CharField(max_length=255)
     order = models.ForeignKey(Order)
+    name = models.CharField(max_length=255)
     product = models.ForeignKey(Product)
     price = models.IntegerField()
     count = models.IntegerField()

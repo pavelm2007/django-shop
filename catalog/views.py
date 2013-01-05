@@ -2,8 +2,6 @@ from django.shortcuts import render_to_response, get_object_or_404
 from catalog.models import Product, Category
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-from django.views.decorators.cache import cache_page
-from django.core.cache import cache
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 
@@ -43,8 +41,6 @@ def category(request, category_slug):
         # If page is out of range (e.g. 9999), deliver last page of results.
         products = paginator.page(paginator.num_pages)
 
-
-
     return render_to_response(
         'catalog/category.html',
         {
@@ -57,24 +53,18 @@ def category(request, category_slug):
 
 
 def product(request, product_slug):
-    categories = Category.active.all()
+    nodes = Category.active.all()
 
     # looking for a product
-    p = get_object_or_404(Product, slug=product_slug)
+    product = get_object_or_404(Product, slug=product_slug)
 
     if settings.DEBUG:
-        print " === Product page: " + p.__unicode__();
+        print " === Product page: " + product.__unicode__();
 
     try:
         #todo: get current category from categories
-        current_category = categories.get(pk=p.category_id)
+        current_category = nodes.get(pk=product.category_id)
     except ObjectDoesNotExist:
-        print("Either the category doesn't exist." + p.category)
+        print("Either the category doesn't exist." + product.category)
 
-    return render_to_response('catalog/product.html',
-        {'product': p,
-         'current_category': current_category,
-         'nodes': categories
-        },
-        context_instance=RequestContext(request)
-    )
+    return render_to_response('catalog/product.html', locals(), context_instance=RequestContext(request))
