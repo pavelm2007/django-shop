@@ -55,11 +55,11 @@ class Option(MPTTModel):
 
 class Product(models.Model):
     category = TreeForeignKey('Category', null=True, blank=False)
-    option = TreeManyToManyField('Option', blank=True)
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True)
     description = models.TextField(default="")
     image = models.ImageField(upload_to="product/", null=True, blank=True)
+    option = TreeManyToManyField('Option', blank=True)
     SKU = models.CharField(max_length=64, default="", blank=True)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     old_price = models.DecimalField(max_digits=9, decimal_places=2, blank=True, default=0.00)

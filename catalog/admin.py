@@ -37,7 +37,7 @@ class CategoryMPTTModelAdmin(MPTTModelAdmin):
     hide_category.short_description = "Mark selected as hidden"
 
 class ProductAdmin(ImperaviAdmin):
-    list_display = ('name', 'price', 'old_price', 'created_at', 'updated_at',)
+    list_display = ('name', 'price', 'old_price', 'updated_at',)
     list_display_links = ('name',)
     list_per_page = 50
     search_fields = ['name', 'description', 'meta_keywords', 'meta_description']
