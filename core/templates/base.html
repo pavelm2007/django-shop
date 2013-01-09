@@ -26,9 +26,6 @@
             },
             currency:   "USD"
         });
-        simpleCart.bind( "afterAdd" , function( item ){
-            console.log( item.get("name") + " was added to the cart!" );
-        });
     </script>
 
     <!--[if lt IE 9]>
@@ -57,8 +54,8 @@
                     <a href="#">EUR</a>
                 </div>
                 <div class="span2">
-                    <a href="/cart/"><h4>Shopping Cart</h4></a>
-                    <a href="/cart/"><span class="simpleCart_quantity"></span> item(s) - <span class="simpleCart_total"></span></a>
+                    <a href="/cart/simple/"><h4>Shopping Cart</h4></a>
+                    <a href="/cart/simple/"><span class="simpleCart_quantity"></span> item(s) - <span class="simpleCart_total"></span></a>
                 </div>
                 <div class="span3 customer_service">
                     <h4>FREE delivery on ALL orders</h4>

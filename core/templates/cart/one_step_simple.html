@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap_toolkit %}
 {% block title %} {{ current_category }} {% endblock %}
 {% block content %}
     <section>
@@ -29,10 +30,11 @@
 
             }
 
-            .simpleCart_items td.item-image{
+            .simpleCart_items td.item-image {
                 padding-left: 10px;
                 padding-right: 0px;
             }
+
             .item-image img {
                 width: 72px;
             }
@@ -54,36 +56,43 @@
         </style>
         <div class="simpleCart_items"></div>
 
-        <form method="post">{% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Submit"/>
+        <form name="order" method="post">
+            {% csrf_token %}
+            {{ form|as_bootstrap }}
+            <div class="actions">
+                <button type="submit" class="btn primary">Submit</button>
+            </div>
         </form>
 
     </section>
     <script>
         simpleCart({
-            checkout: {
-                type: "PayPal",
-                email: "you@yours.com"
-            },
             //Setting the Cart Columns for the sidebar cart display.
-            cartColumns: [
-                { attr: "image", label: false, view: "image"},
+            cartColumns:[
+                { attr:"image", label:false, view:"image"},
                 //Name of the item
-                { attr: "name" , label: "Name" },
+                { attr:"name", label:"Name" },
                 //Quantity displayed as an input
-                { attr: "quantity", label: "Quantity", view: "input"},
+                { attr:"quantity", label:"Quantity", view:"input"},
                 //Built in view for a remove link
-                { view:'remove', text: "Remove", label: false},
+                { view:'remove', text:"Remove", label:false},
                 //Price of item
-                { attr: "price", label: "Price"},
+                { attr:"price", label:"Price"},
                 //Subtotal of that row (quantity of that item * the price)
-                { attr: "total" , label: "Subtotal", view: "currency"  }
+                { attr:"total", label:"Subtotal", view:"currency"  }
             ],
-            cartStyle: "table"
+            cartStyle:"table"
         });
-        simpleCart.bind( "afterAdd" , function( item ){
-            console.log( item.get("name") + " was added to the cart!" );
+
+        $(function () {
+            $('form[name="order"]').submit(function (event) {
+                var orderItems = []
+                simpleCart.each(function (item, x) {
+                    orderItems.push({product: item.get('product'), quantity: item.get('quantity')})
+                });
+                $("input[name='items']").val(JSON.stringify(orderItems, null, 2));
+            });
         });
+
     </script>
 {% endblock %}

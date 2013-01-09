@@ -12,6 +12,7 @@
                 {% for product in product_list %}
                     <div class="row simpleCart_shelfItem">
                         <div class="span1">
+                            <input class="item_product" style="display: none" type="text" value="{{ product.pk }}" />
                             <a href="{% url catalog.views.product product.slug %}">
                                 {% if product.image %}
                                     <img class="item_image" alt="{{ product }}" src="{{ MEDIA_URL }}{{ product.image }}">
@@ -23,8 +24,7 @@
 
                         <div class="span6">
                             <a href="{% url catalog.views.product product.slug %}"><h5 class="item_name">{{ product }}</h5></a>
-
-                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+                            <p>{{ product.description|striptags }} &nbsp;</p>
                         </div>
 
                         <div class="span1 item_price">
