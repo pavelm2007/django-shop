@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load mptt_tags %}
+{% block title %} {{ current_category }} {% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="span3">
+            {% include "catalog/block/categories.html" %}
+        </div>
+        <div class="span9">
+            {% include "catalog/block/breadcrumb.html" %}
+
+            <div class="row">
+                <div class="span9">
+
+                    {% drilldown_tree_for_node current_category as subcategory %}
+
+                    {{ subcategory|tree_info }}
+
+                    {% for genre,structure in subcategory|tree_info %}
+                        {% if structure.new_level %}<ul><li>{% else %}</li><li>{% endif %}
+                        {{ genre.name }}
+                        {% for level in structure.closed_levels %}</li></ul>{% endfor %}
+                    {% endfor %}
+
+                    <!-- start categories -->
+
+                    <ul class="thumbnails">
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="listings.html"><img alt="" src="http://placehold.it/210x145"></a>
+
+                                <div class="caption">
+                                    <a href="listings.html"><h5>Camera &amp; Photo</h5></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="listings.html"><img alt="" src="http://placehold.it/210x145"></a>
+
+                                <div class="caption">
+                                    <a href="listings.html"><h5>TV</h5></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="listings.html"><img alt="" src="http://placehold.it/210x145"></a>
+
+                                <div class="caption">
+                                    <a href="listings.html"><h5>Home Cinema</h5></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="listings.html"><img alt="" src="http://placehold.it/210x145"></a>
+
+                                <div class="caption">
+                                    <a href="listings.html"><h5>Audio, MP3 &amp; Accessories</h5></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="listings.html"><img alt="" src="http://placehold.it/210x145"></a>
+
+                                <div class="caption">
+                                    <a href="listings.html"><h5>Sat Nav &amp; Car Electronics</h5></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="listings.html"><img alt="" src="http://placehold.it/210x145"></a>
+
+                                <div class="caption">
+                                    <a href="listings.html"><h5>Phones &amp; Accessories</h5></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="listings.html"><img alt="" src="http://placehold.it/210x145"></a>
+
+                                <div class="caption">
+                                    <a href="listings.html"><h5>PC &amp; Video Games</h5></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end categories -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

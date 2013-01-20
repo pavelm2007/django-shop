@@ -9,12 +9,17 @@ class CategoryManager(models.Manager):
 
 # Create your models here.
 class Category(MPTTModel):
+    CATEGORY_TYPES = (
+        ('P', 'Products'),
+        ('S', 'Sub categories'),
+    )
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True,
         help_text='Unique value for product page URL, created from name.')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     description = models.TextField(default="", blank=True)
     hidden = models.BooleanField(default=False)
+    view = models.CharField(max_length=1, choices=CATEGORY_TYPES, default="P")
     count_products = models.IntegerField(default=0)
 
     is_active = models.BooleanField(default=True)

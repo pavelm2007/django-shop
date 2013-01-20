@@ -24,7 +24,7 @@
 
                         <div class="span6">
                             <a href="{% url catalog.views.product product.slug %}"><h5 class="item_name">{{ product }}</h5></a>
-                            <p>{{ product.description|striptags }} &nbsp;</p>
+                            <p>{{ product.description|striptags|truncatechars:300 }} &nbsp;</p>
                         </div>
 
                         <div class="span1 item_price">

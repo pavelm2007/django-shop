@@ -2,7 +2,7 @@
 {% load humanize %}
 {% block title %} {{ product }} {% endblock %}
 {% block content %}
-    <div class="row simpleCart_shelfItem">
+    <div class="row simpleCart_shelfItem" itemscope itemtype="http://data-vocabulary.org/Product">
         <div class="span3">
             {% include "catalog/block/categories.html" %}
         </div>
@@ -10,7 +10,7 @@
             {% include "catalog/block/breadcrumb.html" %}
             <div class="row">
                 <div class="span9">
-                    <h1 class="item_name">{{ product.name }}</h1>
+                    <h1 itemprop="name" class="item_name">{{ product.name }}</h1>
                     <input class="item_product" style="display: none" type="text" value="{{ product.pk }}" />
                 </div>
             </div>
@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="span3">
                     {% if product.image %}
-                        <img alt="{{ product.name }}" class="item_image" src="{{ MEDIA_URL }}{{ product.image }}"/>
+                        <img itemprop="image" alt="{{ product.name }}" class="item_image" src="{{ MEDIA_URL }}{{ product.image }}"/>
                     {% else %}
                         <img alt="{{ product }}" class="item_image" src="http://placehold.it/220x220">
                     {% endif %}
@@ -48,16 +48,17 @@
                 <div class="span6">
                     <div class="span6">
                         <address>
-                            <strong>Brand:</strong> <span>Apple</span><br/>
-                            <strong>Product Code:</strong> <span>Product 14</span><br/>
+                            <strong>Brand:</strong> <span itemprop="brand">Apple</span><br/>
+                            <strong>Product Code:</strong> <span itemprop="identifier" content="mpn:{{ product.SKU }}">{{ product.SKU }}</span><br/>
                             <strong>Reward Points:</strong> <span>0</span><br/>
                             <strong>Availability:</strong> <span>Out Of Stock</span><br/>
                         </address>
                     </div>
 
-                    <div class="span6">
-                        <h2>
-                            <strong>Price: <span class="item_price">${{ product.price|intcomma }}</span></strong>
+                    <div itemprop="offerDetails" itemscope itemtype="http://data-vocabulary.org/Offer" class="span6">
+                        <meta itemprop="currency" content="USD" />
+                        <h2 itemprop="availability" content="in_stock">
+                            <strong >Price: <span itemprop="price" class="item_price">${{ product.price|intcomma }}</span></strong>
                             <small>Ex Tax: $500.00</small>
                             <br/><br/>
                         </h2>
@@ -108,7 +109,7 @@
                             <li><a href="#3" data-toggle="tab">Related products</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="1">
+                            <div itemprop="description" class="tab-pane active" id="1">
                                 {% autoescape off %}
                                 {{ product.description }}
                                 {% endautoescape %}
