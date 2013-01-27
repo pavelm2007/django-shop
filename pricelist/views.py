@@ -1,12 +1,12 @@
+from core.settings import STATIC_URL
 from django.http import HttpResponse
 from django.contrib.sites.models import get_current_site
+from xml.etree.ElementTree import Element, SubElement, Comment, tostring
+from core.models import Setting
+from catalog.models import Category, Product
 
 # Create your views here.
 def yml(request):
-    from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-    from core.models import Setting
-    from catalog.models import Category, Product
-
     # loading shop settings
     shop_settings = Setting.objects.filter(is_active=True)[0]
 
@@ -28,7 +28,7 @@ def yml(request):
         category = SubElement(categories, 'category')
         category.text = cat.name
         category.set('id', str(cat.pk))
-        if cat.parent_id > 0 :
+        if cat.parent_id > 0:
             category.set('parentId', str(cat.parent_id))
 
     # all active products
@@ -40,7 +40,7 @@ def yml(request):
 
         #todo: find a better way to get absolute URL
         url = SubElement(offer, 'url')
-        url.text = 'http://'+ current_site.domain + product.get_absolute_url()
+        url.text = 'http://' + current_site.domain + product.get_absolute_url()
 
         price = SubElement(offer, 'price')
         price.text = str(product.price)
@@ -53,7 +53,7 @@ def yml(request):
 
         if product.image:
             picture = SubElement(offer, 'picture')
-            picture.text = 'http://'+ current_site.domain + '/' + str(product.image)
+            picture.text = 'http://' + current_site.domain + '/' + STATIC_URL + '/' + str(product.image)
 
         delivery = SubElement(offer, 'delivery')
         delivery.text = "true"
@@ -64,7 +64,7 @@ def yml(request):
         description = SubElement(offer, 'description')
         description.text = product.description
 
-        if product.SKU :
+        if product.SKU:
             SKU = SubElement(offer, 'vendorCode')
             SKU.text = product.SKU
 
