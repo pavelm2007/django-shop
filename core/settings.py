@@ -102,7 +102,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+#    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -135,7 +135,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    'django.contrib.flatpages',
+#    'django.contrib.flatpages',
+    'core',
     'mptt',
     'south',
     'utils',
@@ -145,7 +146,7 @@ INSTALLED_APPS = (
     'compare',
     'cart',
     'theme',
-    'yandex',
+    'pricelist',
     'imperavi'
 )
 

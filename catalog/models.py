@@ -1,10 +1,15 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey, TreeManyToManyField
 from autoslug import AutoSlugField
+from django.core.urlresolvers import reverse
 
 class CategoryManager(models.Manager):
     def get_query_set(self):
         return super(CategoryManager, self).get_query_set().exclude(hidden=True).exclude(count_products=0)
+
+class ProductManager(models.Manager):
+    def get_query_set(self):
+        return super(ProductManager, self).get_query_set().exclude(is_active=False)
 
 
 # Create your models here.
@@ -31,7 +36,7 @@ class Category(MPTTModel):
     updated_at = models.DateTimeField(auto_now=True)
 
     # managers
-    object = models.Manager()
+    objects = models.Manager()
     active = CategoryManager()
 
     class MPTTMeta:
@@ -77,6 +82,10 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # managers
+    objects = models.Manager()
+    active = ProductManager()
+
     def __unicode__(self):
         return self.name
 
@@ -85,3 +94,7 @@ class Product(models.Model):
             return self.price
         else:
             return None
+
+    def get_absolute_url(self):
+        return reverse('catalog.views.product', args=[str(self.slug)])
+
