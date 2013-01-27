@@ -1,4 +1,4 @@
-from core.settings import STATIC_URL
+from core.settings import MEDIA_URL
 from django.http import HttpResponse
 from django.contrib.sites.models import get_current_site
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
@@ -53,7 +53,7 @@ def yml(request):
 
         if product.image:
             picture = SubElement(offer, 'picture')
-            picture.text = 'http://' + current_site.domain + STATIC_URL + str(product.image)
+            picture.text = 'http://' + current_site.domain + MEDIA_URL + str(product.image)
 
         delivery = SubElement(offer, 'delivery')
         delivery.text = "true"
