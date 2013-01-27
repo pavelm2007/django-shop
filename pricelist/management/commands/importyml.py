@@ -5,6 +5,7 @@ from catalog.models import Product, Category
 import urllib2, urlparse
 from django.core.files.base import ContentFile
 from django.conf import settings
+import urllib2
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
@@ -32,6 +33,9 @@ class Command(BaseCommand):
             try:
 #                if settings.DEBUG:
 #                    file = '/Users/alexzaporozhets/Downloads/records.xml';
+                request = urllib2.Request(file, headers={"Accept" : "application/xml"})
+                file = urllib2.urlopen(request)
+
                 tree = ET.parse(file)
 
             except ET.ParseError:

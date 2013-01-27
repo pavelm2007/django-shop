@@ -34,7 +34,7 @@ def yml(request):
     # all active products
     offers = SubElement(shop, 'offers')
     current_site = get_current_site(request)
-    for product in Product.objects.all():
+    for product in Product.active.all():
         offer = SubElement(offers, 'offer')
         offer.set('id', str(product.pk))
 
