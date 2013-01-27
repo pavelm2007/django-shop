@@ -53,7 +53,7 @@ def yml(request):
 
         if product.image:
             picture = SubElement(offer, 'picture')
-            picture.text = 'http://' + current_site.domain + '/' + STATIC_URL + '/' + str(product.image)
+            picture.text = 'http://' + current_site.domain + STATIC_URL + str(product.image)
 
         delivery = SubElement(offer, 'delivery')
         delivery.text = "true"
