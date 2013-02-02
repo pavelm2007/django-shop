@@ -2,10 +2,13 @@ from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey, TreeManyToManyField
 from autoslug import AutoSlugField
 from django.core.urlresolvers import reverse
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 class CategoryManager(models.Manager):
     def get_query_set(self):
         return super(CategoryManager, self).get_query_set().exclude(hidden=True).exclude(count_products=0)
+
 
 class ProductManager(models.Manager):
     def get_query_set(self):
@@ -17,7 +20,7 @@ class Category(MPTTModel):
     CATEGORY_TYPES = (
         ('P', 'Products'),
         ('S', 'Sub categories'),
-    )
+        )
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True,
         help_text='Unique value for product page URL, created from name.')
@@ -67,6 +70,7 @@ class Product(models.Model):
     category = TreeForeignKey('Category', null=True, blank=False)
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True)
+    intro = models.TextField(default="")
     description = models.TextField(default="")
     image = models.ImageField(upload_to="product/", null=True, blank=True)
     option = TreeManyToManyField('Option', blank=True)
@@ -97,4 +101,33 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('catalog.views.product', args=[str(self.slug)])
+
+
+class ProductMedia(models.Model):
+    product = models.ForeignKey(Product)
+    image = models.ImageField(upload_to="product/", null=True, blank=True)
+    description = models.CharField(default="", blank=True, max_length=255)
+
+
+# SIGNALS
+@receiver(pre_save, sender=Product)
+def counters_hook(sender, instance, **kwargs):
+    try:
+        old_category = sender.objects.get(pk=instance.pk).category
+        new_category = instance.category
+
+        if old_category != new_category:
+            for ancestor in old_category.get_ancestors(include_self=True):
+                ancestor.count_products -= 1
+                ancestor.save()
+
+            for ancestor in new_category.get_ancestors(include_self=True):
+                ancestor.count_products += 1
+                ancestor.save()
+
+    except sender.DoesNotExist:
+        for ancestor in instance.category.get_ancestors(include_self=True):
+            ancestor.count_products += 1
+            ancestor.save()
+
 
