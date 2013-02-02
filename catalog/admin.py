@@ -1,15 +1,17 @@
-from catalog.models import Product, Category, Option
+from catalog.models import Product, ProductMedia, Category, Option
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from imperavi.admin import ImperaviAdmin
 from imperavi.admin import ImperaviStackedInlineAdmin
+from feincms.admin import tree_editor
+
 
 class OptionMPTTModelAdmin(MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
     mptt_level_indent = 20
 
 
-class CategoryMPTTModelAdmin(MPTTModelAdmin):
+class CategoryMPTTModelAdmin(tree_editor.TreeEditor):
     # specify pixel amount for this ModelAdmin only:
     list_display = ('name', 'slug', 'is_active', 'count_products')
     mptt_level_indent = 20
@@ -36,6 +38,11 @@ class CategoryMPTTModelAdmin(MPTTModelAdmin):
     un_hide_category.short_description = "Mark selected as active"
     hide_category.short_description = "Mark selected as hidden"
 
+
+class ProductMediaInline(admin.TabularInline):
+    model = ProductMedia
+    extra = 0
+
 class ProductAdmin(ImperaviAdmin):
     list_display = ('name', 'price', 'old_price', 'updated_at',)
     list_display_links = ('name',)
@@ -44,6 +51,8 @@ class ProductAdmin(ImperaviAdmin):
 
     # sets up slug to be generated from product name
     prepopulated_fields = {'slug' : ('name',)}
+
+    inlines = [ProductMediaInline]
 
 admin.site.register(Product, ProductAdmin)
 

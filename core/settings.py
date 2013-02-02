@@ -147,7 +147,8 @@ INSTALLED_APPS = (
     'cart',
     'theme',
     'pricelist',
-    'imperavi'
+    'imperavi',
+    'feincms'
 )
 
 CACHES = {
