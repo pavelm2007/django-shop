@@ -19,7 +19,6 @@ export -f update_site
 su www-data -c "bash -c update_site"
 
 service uwsgi restart
-service celeryd restart
 service nginx force-reload
 
 
