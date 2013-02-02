@@ -10,7 +10,7 @@ def index(request):
         'catalog/index.html',
         {
             'product_list': Product.objects.filter()[:9],
-            'nodes': Category.active.all()
+            'nodes': Category.active.all(),
         },
         context_instance=RequestContext(request)
     )
@@ -24,10 +24,11 @@ def category(request, category_slug):
         descendants = current_category.get_descendants(include_self=True)
     except ObjectDoesNotExist:
         print("Either the category doesn't exist." + category_slug)
+        return
 
     if settings.DEBUG:
-        print " === Category page: " + current_category.__unicode__();
-        print " === Category view: " + current_category.view;
+        print " === Category page: " + current_category.__unicode__()
+        print " === Category view: " + current_category.view
 
     if current_category.view == 'S':
         # render subcategory-view
@@ -72,7 +73,7 @@ def product(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
 
     if settings.DEBUG:
-        print " === Product page: " + product.__unicode__();
+        print " === Product page: " + product.__unicode__()
 
     try:
         #todo: get current category from categories
