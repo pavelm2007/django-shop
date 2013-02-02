@@ -13,10 +13,9 @@ python manage.py collectstatic --noinput
 python manage.py syncdb
 python manage.py migrate
 
-
 exit
-service uwsgi force-reload
+service uwsgi restart
 
 
 
-python manage.py importyml /data/isells.eu/isells/scripts/medtest.xml --images
+#python manage.py importyml /data/isells.eu/isells/scripts/medtest.xml --images
