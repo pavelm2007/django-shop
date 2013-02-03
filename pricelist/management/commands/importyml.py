@@ -4,8 +4,7 @@ from optparse import make_option
 from catalog.models import Product, Category
 import urllib2, urlparse
 from django.core.files.base import ContentFile
-from django.conf import settings
-import urllib2
+
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
@@ -15,12 +14,12 @@ class Command(BaseCommand):
             default=True,
             help='Delete poll instead of closing it'),
         ) + (
-        make_option('--images',
-            action='store_true',
-            dest='images',
-            default=False,
-            help='Import images from YML'),
-        )
+                      make_option('--images',
+                          action='store_true',
+                          dest='images',
+                          default=False,
+                          help='Import images from YML'),
+                      )
     args = '<poll_id poll_id ...>'
     help = 'Closes the specified YML for importing'
 
@@ -30,16 +29,18 @@ class Command(BaseCommand):
             Product.objects.all().delete();
 
         for file in args:
-            try:
-#                if settings.DEBUG:
-#                    file = '/Users/alexzaporozhets/Downloads/records.xml';
-                request = urllib2.Request(file, headers={"Accept" : "application/xml"})
-                file = urllib2.urlopen(request)
+            if file[0:4] == 'http':
+                try:
+                    request = urllib2.Request(file, headers={"Accept": "application/xml"})
+                    file = urllib2.urlopen(request)
 
+                    tree = ET.parse(file)
+
+                except ET.ParseError:
+                    raise CommandError('YML "%s" is not valid' % file)
+            else:
+                file = '/Users/alexzaporozhets/PycharmProjects/isells/scripts/demo_site_data_yml.xml'
                 tree = ET.parse(file)
-
-            except ET.ParseError:
-                raise CommandError('YML "%s" is not valid' % file)
 
             root = tree.getroot()
 
@@ -78,20 +79,24 @@ class Command(BaseCommand):
                     description = ""
 
                 offer = Product(
-                                name=child.find('name').text,
-                                price=child.find('price').text,
-                                description=description,
-                                category=Category.objects.get(pk=trans_dct[child.find('categoryId').text])
+                    name=child.find('name').text,
+                    price=child.find('price').text,
+                    description=description,
+                    category=Category.objects.get(pk=trans_dct[child.find('categoryId').text])
 
                 );
 
                 if options['images']:
                     # importing images from <picture>http://...</picture>
                     if child.find('picture') is not None:
-                        image_data = urllib2.urlopen(child.find('picture').text, timeout=5)
-                        filename = urlparse.urlparse(image_data.geturl()).path.split('/')[-1] + '.jpg'
-                        offer.image = filename
-                        offer.image.save(filename, ContentFile(image_data.read()), save=False)
+                        try:
+                            image_data = urllib2.urlopen(child.find('picture').text, timeout=5)
+                        except urllib2.HTTPError:
+                            print 'Could not download image: ' + child.find('picture').text
+                        else:
+                            filename = urlparse.urlparse(image_data.geturl()).path.split('/')[-1] + '.jpg'
+                            offer.image = filename
+                            offer.image.save(filename, ContentFile(image_data.read()), save=False)
 
                 offer.save()
 
@@ -101,5 +106,6 @@ class Command(BaseCommand):
             categories = Category.objects.all()
 
             for category in categories:
-                category.count_products = Product.objects.filter(category__in=category.get_descendants(include_self=True)).count()
+                category.count_products = Product.objects.filter(
+                    category__in=category.get_descendants(include_self=True)).count()
                 category.save()
