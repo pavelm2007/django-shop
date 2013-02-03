@@ -24,24 +24,13 @@
                     {% endif %}
 
                     <ul class="thumbnails">
-
+                    {% for product_media in product.productmedia_set.all %}
                         <li class="span1">
                             <a href="#" class="thumbnail">
-                                <img src="http://placehold.it/50x50" alt="">
+                                <img src="{{ MEDIA_URL }}{{ product_media.image }}" alt="">
                             </a>
                         </li>
-
-                        <li class="span1">
-                            <a href="#" class="thumbnail">
-                                <img src="http://placehold.it/50x50" alt="">
-                            </a>
-                        </li>
-
-                        <li class="span1">
-                            <a href="#" class="thumbnail">
-                                <img src="http://placehold.it/50x50" alt="">
-                            </a>
-                        </li>
+                    {% endfor %}
                     </ul>
                 </div>
 

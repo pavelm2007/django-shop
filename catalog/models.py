@@ -2,7 +2,7 @@ from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey, TreeManyToManyField
 from autoslug import AutoSlugField
 from django.core.urlresolvers import reverse
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
 class CategoryManager(models.Manager):
@@ -107,6 +107,7 @@ class ProductMedia(models.Model):
     product = models.ForeignKey(Product)
     image = models.ImageField(upload_to="product/", null=True, blank=True)
     description = models.CharField(default="", blank=True, max_length=255)
+    is_main = models.BooleanField(default=False)
 
 
 # SIGNALS
@@ -130,4 +131,16 @@ def counters_hook(sender, instance, **kwargs):
             ancestor.count_products += 1
             ancestor.save()
 
+# copy main image into the product object
+@receiver(post_save, sender=ProductMedia)
+def product_image(sender, instance, **kwargs):
+    if instance.is_main:
+        # removing is_main flag from all images
+        for product_image in instance.product.productmedia_set.all():
+            if product_image.pk != instance.pk:
+                product_image.is_main = False
+                product_image.save()
 
+        # making this image as main
+        instance.product.image = instance.image
+        instance.product.save()

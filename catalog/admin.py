@@ -48,6 +48,7 @@ class ProductAdmin(ImperaviAdmin):
     list_display_links = ('name',)
     list_per_page = 50
     search_fields = ['name', 'description', 'meta_keywords', 'meta_description', 'slug']
+    exclude = ('image',)
 
     # sets up slug to be generated from product name
     prepopulated_fields = {'slug' : ('name',)}
