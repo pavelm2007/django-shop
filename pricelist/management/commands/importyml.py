@@ -1,9 +1,12 @@
 import xml.etree.ElementTree as ET
 from django.core.management.base import BaseCommand, CommandError
 from optparse import make_option
-from catalog.models import Product, Category
+from catalog.models import Product, Category, ProductMedia
 import urllib2, urlparse
 from django.core.files.base import ContentFile
+import time
+from django.db.models.signals import Signal, pre_save
+from catalog.models import counters_hook
 
 
 class Command(BaseCommand):
@@ -24,6 +27,11 @@ class Command(BaseCommand):
     help = 'Closes the specified YML for importing'
 
     def handle(self, *args, **options):
+        start_time = time.time()
+
+        # going to disconnect categories counter update hook from Product
+        Signal.disconnect(pre_save, sender=Product, receiver=counters_hook)
+
         if options['delete']:
             Category.objects.all().delete();
             Product.objects.all().delete();
@@ -39,7 +47,6 @@ class Command(BaseCommand):
                 except ET.ParseError:
                     raise CommandError('YML "%s" is not valid' % file)
             else:
-                file = '/Users/alexzaporozhets/PycharmProjects/isells/scripts/demo_site_data_yml.xml'
                 tree = ET.parse(file)
 
             root = tree.getroot()
@@ -73,18 +80,22 @@ class Command(BaseCommand):
             self.stdout.write('Categories imported' + '\n')
 
             # import offers (products)
+            product_counter = 0
             for child in root.find('shop').find('offers'):
                 description = child.find('description').text;
                 if description is None:
                     description = ""
 
-                offer = Product(
+                product = Product(
                     name=child.find('name').text,
                     price=child.find('price').text,
                     description=description,
                     category=Category.objects.get(pk=trans_dct[child.find('categoryId').text])
 
                 );
+
+                product.save()
+                product_counter += 1
 
                 if options['images']:
                     # importing images from <picture>http://...</picture>
@@ -95,17 +106,17 @@ class Command(BaseCommand):
                             print 'Could not download image: ' + child.find('picture').text
                         else:
                             filename = urlparse.urlparse(image_data.geturl()).path.split('/')[-1] + '.jpg'
-                            offer.image = filename
-                            offer.image.save(filename, ContentFile(image_data.read()), save=False)
 
-                offer.save()
+                            product_media = ProductMedia(image=filename, is_main=True, product=product)
+                            product_media.image.save(filename, ContentFile(image_data.read()), save=False)
+                            product_media.save()
 
-            self.stdout.write('Products imported' + '\n')
+            self.stdout.write('Products imported - ' + str(product_counter) + '\n' + str(round(time.time() - start_time, 2)) + " seconds")
 
             # fix categories counters
             categories = Category.objects.all()
 
             for category in categories:
-                category.count_products = Product.objects.filter(
+                category.count_products = Product.active.filter(
                     category__in=category.get_descendants(include_self=True)).count()
                 category.save()
