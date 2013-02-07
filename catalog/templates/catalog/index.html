@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load thumbnail %}
 {% block title %} {{ current_category }} {% endblock %}
 {% block content %}
@@ -8,7 +9,7 @@
         </div>
         <div class="span9">{% include "catalog/block/carousel.html" %}</div>
         <div class="span7 popular_products">
-            <h4>Popular products</h4><br/>
+            <h4>{% trans "Popular products" %}</h4><br/>
             {% if product_list %}
                 <ul class="thumbnails">
                     {% for product in product_list %}
