@@ -5,9 +5,10 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
+
 class CategoryManager(models.Manager):
     def get_query_set(self):
-        return super(CategoryManager, self).get_query_set().exclude(hidden=True).exclude(count_products=0)
+        return super(CategoryManager, self).get_query_set().exclude(is_active=False)
 
 
 class ProductManager(models.Manager):
@@ -20,21 +21,20 @@ class Category(MPTTModel):
     CATEGORY_TYPES = (
         ('P', 'Products'),
         ('S', 'Sub categories'),
-        )
+    )
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True,
-        help_text='Unique value for product page URL, created from name.')
+                         help_text='Unique value for product page URL, created from name.')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     description = models.TextField(default="", blank=True)
-    hidden = models.BooleanField(default=False)
     view = models.CharField(max_length=1, choices=CATEGORY_TYPES, default="P")
     count_products = models.IntegerField(default=0)
 
     is_active = models.BooleanField(default=True)
     meta_keywords = models.CharField("Meta Keywords", max_length=255, default="",
-        help_text='Comma-delimited set of SEO keywords for meta tag')
+                                     help_text='Comma-delimited set of SEO keywords for meta tag')
     meta_description = models.CharField("Meta Description", max_length=255, default="",
-        help_text='Content for description meta tag')
+                                        help_text='Content for description meta tag')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -47,9 +47,6 @@ class Category(MPTTModel):
 
     class Meta:
         verbose_name_plural = 'Categories'
-
-    def is_active(self):
-        return self.count_products > 0 and self.hidden is False
 
     is_active.boolean = True
     is_active.short_description = 'Active'
@@ -80,9 +77,9 @@ class Product(models.Model):
 
     is_active = models.BooleanField(default=True)
     meta_keywords = models.CharField("Meta Keywords", max_length=255, default="", blank=True,
-        help_text='Comma-delimited set of SEO keywords for meta tag')
+                                     help_text='Comma-delimited set of SEO keywords for meta tag')
     meta_description = models.CharField("Meta Description", max_length=255, default="", blank=True,
-        help_text='Content for description meta tag')
+                                        help_text='Content for description meta tag')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -144,3 +141,8 @@ def product_image(sender, instance, **kwargs):
         # making this image as main
         instance.product.image = instance.image
         instance.product.save()
+
+# Categories
+@receiver(pre_save, sender=Category)
+def category_is_active(sender, instance, **kwargs):
+    print instance

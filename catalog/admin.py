@@ -17,10 +17,13 @@ class CategoryMPTTModelAdmin(tree_editor.TreeEditor):
     mptt_level_indent = 20
     actions = ['hide_category', 'un_hide_category']
     # sets up slug to be generated from category name
-    prepopulated_fields = {'slug' : ('name',)}
+    prepopulated_fields = {'slug': ('name',)}
 
     def hide_category(self, request, queryset):
-        rows_updated = queryset.update(hidden=True)
+        rows_updated = 0
+        for category in queryset.all():
+            rows_updated += category.get_descendants(include_self=True).update(is_active=False)
+
         if rows_updated == 1:
             message_bit = "1 category was"
         else:
@@ -28,7 +31,10 @@ class CategoryMPTTModelAdmin(tree_editor.TreeEditor):
         self.message_user(request, "%s successfully marked as hidden." % message_bit)
 
     def un_hide_category(self, request, queryset):
-        rows_updated = queryset.update(hidden=False)
+        rows_updated = 0
+        for category in queryset.all():
+            rows_updated += category.get_ancestors(include_self=True).update(is_active=True)
+
         if rows_updated == 1:
             message_bit = "1 category was"
         else:
@@ -43,6 +49,7 @@ class ProductMediaInline(admin.TabularInline):
     model = ProductMedia
     extra = 0
 
+
 class ProductAdmin(ImperaviAdmin):
     list_display = ('name', 'price', 'old_price', 'updated_at',)
     list_display_links = ('name',)
@@ -51,9 +58,10 @@ class ProductAdmin(ImperaviAdmin):
     exclude = ('image',)
 
     # sets up slug to be generated from product name
-    prepopulated_fields = {'slug' : ('name',)}
+    prepopulated_fields = {'slug': ('name',)}
 
     inlines = [ProductMediaInline]
+
 
 admin.site.register(Product, ProductAdmin)
 
