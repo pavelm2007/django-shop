@@ -12,6 +12,7 @@ update_site(){
     python manage.py collectstatic --noinput
     python manage.py syncdb
     python manage.py migrate
+    python manage.py thumbnail clear
 
 }
 export -f update_site
