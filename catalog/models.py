@@ -73,7 +73,7 @@ class Product(models.Model):
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True, editable=True, blank=True)
     intro = models.TextField(default="")
     description = models.TextField(default="")
-    image = models.ImageField(upload_to="product/", null=True, blank=True)
+    image = models.ImageField(upload_to="product/", null=True, blank=True, max_length=255)
     option = TreeManyToManyField('Option', blank=True)
     SKU = models.CharField(max_length=64, default="", blank=True)
     price = models.DecimalField(max_digits=9, decimal_places=2)

@@ -189,8 +189,8 @@ LOGGING = {
     }
 }
 
-THUMBNAIL_DEBUG = True
 if DEBUG:
+    THUMBNAIL_DEBUG = True
     INTERNAL_IPS = ('127.0.0.1')
 
     MIDDLEWARE_CLASSES += (
