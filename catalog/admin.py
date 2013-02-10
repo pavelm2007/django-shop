@@ -4,7 +4,7 @@ from mptt.admin import MPTTModelAdmin
 from imperavi.admin import ImperaviAdmin
 from imperavi.admin import ImperaviStackedInlineAdmin
 from feincms.admin import tree_editor
-
+from sorl.thumbnail.admin import AdminImageMixin
 
 class OptionMPTTModelAdmin(MPTTModelAdmin):
     # specify pixel amount for this ModelAdmin only:
@@ -45,14 +45,14 @@ class CategoryMPTTModelAdmin(tree_editor.TreeEditor):
     hide_category.short_description = "Mark selected as hidden"
 
 
-class ProductMediaInline(admin.TabularInline):
+class ProductMediaInline(AdminImageMixin, admin.TabularInline):
     model = ProductMedia
     extra = 0
 
 
-class ProductAdmin(ImperaviAdmin):
-    list_display = ('name', 'price', 'old_price', 'updated_at',)
-    list_display_links = ('name',)
+class ProductAdmin(AdminImageMixin, ImperaviAdmin):
+    list_display = ('thumbnail', 'name', 'price', 'old_price', 'updated_at',)
+    list_display_links = ('name', )
     list_per_page = 50
     search_fields = ['name', 'description', 'meta_keywords', 'meta_description', 'slug']
     exclude = ('image',)

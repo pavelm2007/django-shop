@@ -1,10 +1,13 @@
+# coding=utf-8
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey, TreeManyToManyField
 from autoslug import AutoSlugField
 from django.core.urlresolvers import reverse
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
-from imagekit.models import ImageSpecField
+from sorl.thumbnail import ImageField
+from sorl.thumbnail.shortcuts import get_thumbnail
+from django.utils.translation import ugettext as _
 
 
 class CategoryManager(models.Manager):
@@ -100,12 +103,24 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('catalog.views.product', args=[str(self.slug)])
 
+    def thumbnail(self, width=64, height=64):
+        if self.image:
+            thumbnail = get_thumbnail(self.image, str(width) + 'x' + str(height))
+            img_resize_url = unicode(thumbnail.url)
+            html = '<a style="height:%spx; display:block" class="image-picker" href="%s">' \
+                   '<img src="%s" alt="%s" width="%s" height="%s" />' \
+                   '</a>'
+            return html % (height, self.image.url, img_resize_url, self.name, thumbnail.width, thumbnail.height)
+
+        return '<img src="http://placehold.it/64x64" alt="False">'
+
+    thumbnail.short_description = _('Thumbnail')
+    thumbnail.allow_tags = True
+
 
 class ProductMedia(models.Model):
     product = models.ForeignKey(Product)
-    image = models.ImageField(upload_to="product/", null=True, blank=True)
-    formatted_image = ImageSpecField(image_field='image', format='JPEG',
-                                     options={'quality': 90})
+    image = ImageField(upload_to="product/", null=True, blank=True)
     description = models.CharField(default="", blank=True, max_length=255)
     is_main = models.BooleanField(default=False)
 
@@ -154,6 +169,7 @@ def product_image(sender, instance, **kwargs):
             instance.is_main = True
             # call this signal again
             instance.save()
+
 
 @receiver(post_delete, sender=ProductMedia)
 def product_image_delete(sender, instance, **kwargs):
