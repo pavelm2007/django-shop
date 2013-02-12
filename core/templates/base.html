@@ -2,6 +2,7 @@
 {% load bootstrap_toolkit %}
 {% load mptt_tags %}
 {% load static %}
+{% load i18n %}
 {% get_static_prefix as STATIC_URL %}
 <html lang="en">
 <head>
@@ -48,13 +49,13 @@
             <div class="row">
                 <div class="span1">&nbsp;</div>
                 <div class="span2">
-                    <h4>Currency</h4>
+                    <h4>{% trans "Currency" %}</h4>
                     <a href="#">USD</a> |
                     <a href="#"><strong>GBP</strong></a> |
                     <a href="#">EUR</a>
                 </div>
                 <div class="span2">
-                    <a href="/cart/simple/"><h4>Shopping Cart</h4></a>
+                    <a href="/cart/simple/"><h4>{% trans "Shopping Cart" %}</h4></a>
                     <a href="/cart/simple/"><span class="simpleCart_quantity"></span> item(s) - <span class="simpleCart_total"></span></a>
                 </div>
                 <div class="span3 customer_service">
@@ -111,8 +112,8 @@
                             <ul class="nav pull-right">
                                 <li class="divider-vertical"></li>
                                 <form class="navbar-search" action="">
-                                    <input type="text" class="search-query span2" placeholder="Search">
-                                    <button class="btn btn-primary btn-small search_btn" type="submit">Go</button>
+                                    <input type="text" class="search-query span2" placeholder={% trans "Search" %}>
+                                    <button class="btn btn-primary btn-small search_btn" type="submit">{% trans "Go" %}</button>
                                 </form>
 
                             </ul>
