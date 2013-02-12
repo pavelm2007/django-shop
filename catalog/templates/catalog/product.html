@@ -18,18 +18,22 @@
             <div class="row">
                 <div class="span3">
                     {% if product.image %}
-                        <img itemprop="image" alt="{{ product.name }}" class="item_image" src="{{ MEDIA_URL }}{{ product.image }}"/>
+                        <a class="fancybox" rel="gallery" href="{{ MEDIA_URL }}{{ product.image }}" title="{{ product }}">
+                            <img itemprop="image" alt="{{ product.name }}" class="item_image" src="{{ MEDIA_URL }}{{ product.image }}"/>
+                        </a>
                     {% else %}
                         <img alt="{{ product }}" class="item_image" src="http://placehold.it/220x220">
                     {% endif %}
 
                     <ul class="thumbnails">
                     {% for product_media in product.productmedia_set.all %}
-                        <li class="span1">
-                            <a href="#" class="thumbnail">
-                                <img src="{{ MEDIA_URL }}{{ product_media.image }}" alt="">
-                            </a>
-                        </li>
+                        {% if not product_media.is_main %}
+                            <li class="span1">
+                                <a  class="thumbnail fancybox" rel="gallery" href="{{ MEDIA_URL }}{{ product_media.image }}" title="{{ product_media.description }}">
+                                    <img src="{{ MEDIA_URL }}{{ product_media.image }}" alt="">
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                     </ul>
                 </div>
@@ -161,5 +165,14 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                prevEffect  : 'none',
+                nextEffect	: 'none'
+            });
+        });
+
+    </script>
 
 {% endblock %}
