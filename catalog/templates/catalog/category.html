@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load i18n %}
 {% block title %} {{ current_category }} {% endblock %}
 {% block content %}
     <div class="row">
@@ -32,11 +33,11 @@
                         </div>
 
                         <div class="span2">
-                            <p><a class="btn btn-primary item_add" href="javascript:;">Add to cart</a></p>
+                            <p><a class="btn btn-primary item_add" href="javascript:;">{% trans "Add to cart" %}</a></p>
 
-                            <p><a class="" href="#">Add to Wish List</a></p>
+                            <p><a class="" href="#">{%  trans "Add to Wish List" %}</a></p>
 
-                            <p><a class="" href="compare.html">Add to Compare</a></p>
+                            <p><a class="" href="compare.html">{% trans "Add to Compare" %}</a></p>
                         </div>
                     </div>
                     <hr/>

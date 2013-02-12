@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-11 17:45+0200\n"
+"POT-Creation-Date: 2013-02-12 18:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,10 +23,102 @@ msgstr ""
 msgid "Thumbnail"
 msgstr ""
 
+#: catalog/templates/catalog/category.html:36
+#: catalog/templates/catalog/product.html:62
+msgid "Add to cart"
+msgstr "Добавить в корзину"
+
+#: catalog/templates/catalog/category.html:38
+#: catalog/templates/catalog/product.html:68
+msgid "Add to Wish List"
+msgstr "Добавить в список"
+
+#: catalog/templates/catalog/category.html:40
+#: catalog/templates/catalog/product.html:70
+msgid "Add to Compare"
+msgstr "Добавить к сравнению"
+
 #: catalog/templates/catalog/index.html:12
 msgid "Popular products"
+msgstr "Популярные продукты"
+
+#: catalog/templates/catalog/index.html:29
+#: catalog/templates/catalog/product.html:51
+msgid "Price:"
+msgstr "Цена:"
+
+#: catalog/templates/catalog/index.html:43
+msgid "Newsletter"
+msgstr "Рассылка"
+
+#: catalog/templates/catalog/index.html:45
+msgid ""
+"Sign up for our weekly newsletter and stay up-to-date with the latest "
+"offers, and newest products."
+msgstr ""
+"Подпишитесь на нашу рассылку и будьте всегда в курсе свежих предложений и "
+"новых товаров"
+
+#: catalog/templates/catalog/index.html:48
+msgid "Enter your email"
+msgstr "Введите ваш email"
+
+#: catalog/templates/catalog/index.html:49
+msgid "Subscribe"
+msgstr "Подписаться"
+
+#: catalog/templates/catalog/product.html:41
+msgid "Brand:"
+msgstr "Изготовитель"
+
+#: catalog/templates/catalog/product.html:42
+msgid "Product Code:"
+msgstr "Код товара"
+
+#: catalog/templates/catalog/product.html:43
+msgid "Reward Points:"
+msgstr ""
+
+#: catalog/templates/catalog/product.html:44
+msgid "Availability:"
+msgstr "Наличие"
+
+#: catalog/templates/catalog/product.html:84
+msgid "reviews"
+msgstr "отзывы"
+
+#: catalog/templates/catalog/product.html:84
+msgid "Write a review"
+msgstr "Написать отзыв"
+
+#: catalog/templates/catalog/product.html:97
+msgid "Description"
+msgstr "Описание"
+
+#: catalog/templates/catalog/product.html:98
+msgid "Reviews"
+msgstr "Отзы"
+
+#: catalog/templates/catalog/product.html:99
+msgid "Related products"
 msgstr "Популярные продукты"
 
 #: catalog/templates/catalog/block/categories.html:5
 msgid "Categories"
 msgstr "Категории"
+
+#: core/templates/base.html:52
+msgid "Currency"
+msgstr "Валюта"
+
+#: core/templates/base.html:58
+msgid "Shopping Cart"
+msgstr "Корзина"
+
+#: core/templates/base.html:115
+msgid "Search"
+msgstr "Поиск"
+
+#: core/templates/base.html:116
+msgid "Go"
+msgstr "Искать"
