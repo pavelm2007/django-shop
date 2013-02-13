@@ -26,7 +26,7 @@ msgstr ""
 #: catalog/templates/catalog/category.html:36
 #: catalog/templates/catalog/product.html:62
 msgid "Add to cart"
-msgstr "Добавить в корзину"
+msgstr "В корзину"
 
 #: catalog/templates/catalog/category.html:38
 #: catalog/templates/catalog/product.html:68
@@ -101,7 +101,7 @@ msgstr "Отзы"
 
 #: catalog/templates/catalog/product.html:99
 msgid "Related products"
-msgstr "Популярные продукты"
+msgstr "Похожие товары"
 
 #: catalog/templates/catalog/block/categories.html:5
 msgid "Categories"
