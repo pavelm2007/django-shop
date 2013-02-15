@@ -97,7 +97,7 @@ msgstr "Описание"
 
 #: catalog/templates/catalog/product.html:98
 msgid "Reviews"
-msgstr "Отзы"
+msgstr "Отзывы"
 
 #: catalog/templates/catalog/product.html:99
 msgid "Related products"
