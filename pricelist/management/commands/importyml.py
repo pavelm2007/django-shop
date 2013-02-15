@@ -5,8 +5,8 @@ from catalog.models import Product, Category, ProductMedia
 import urllib2, urlparse
 from django.core.files.base import ContentFile
 import time
-from django.db.models.signals import Signal, pre_save
-from catalog.models import counters_hook
+from django.db.models.signals import Signal, pre_save, post_delete
+from catalog.models import counters_hook, product_image_delete
 
 
 class Command(BaseCommand):
@@ -31,6 +31,9 @@ class Command(BaseCommand):
 
         # going to disconnect categories counter update hook from Product
         Signal.disconnect(pre_save, sender=Product, receiver=counters_hook)
+
+        # going to disconnect product medial hook
+        Signal.disconnect(post_delete, sender=ProductMedia, receiver=product_image_delete)
 
         if options['delete']:
             Category.objects.all().delete();
