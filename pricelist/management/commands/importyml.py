@@ -122,4 +122,9 @@ class Command(BaseCommand):
             for category in categories:
                 category.count_products = Product.active.filter(
                     category__in=category.get_descendants(include_self=True)).count()
+
+                # deactivate empty categories
+                if category.count_products == 0:
+                    category.active = False
+
                 category.save()

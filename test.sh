@@ -19,7 +19,7 @@ export -f update_site
 
 su www-data -c "bash -c update_site"
 
-service uwsgi restart
+service uwsgi restart medtest
 service nginx force-reload
 
 
