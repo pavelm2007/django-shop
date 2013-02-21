@@ -125,6 +125,6 @@ class Command(BaseCommand):
 
                 # deactivate empty categories
                 if category.count_products == 0:
-                    category.active = False
+                    category.is_active = False
 
                 category.save()
