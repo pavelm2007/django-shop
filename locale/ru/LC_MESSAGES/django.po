@@ -150,7 +150,7 @@ msgstr "Удалить"
 #: core/templates/cart/index.html:80
 #: core/templates/cart/one_step_simple.html:81
 msgid "Price"
-msgstr "Цена:"
+msgstr "Цена"
 
 #: core/templates/cart/index.html:82
 #: core/templates/cart/one_step_simple.html:83
