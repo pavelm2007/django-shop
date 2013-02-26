@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-12 18:37+0200\n"
+"POT-Creation-Date: 2013-02-26 18:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,17 +24,17 @@ msgid "Thumbnail"
 msgstr ""
 
 #: catalog/templates/catalog/category.html:36
-#: catalog/templates/catalog/product.html:62
+#: catalog/templates/catalog/product.html:66
 msgid "Add to cart"
 msgstr "В корзину"
 
 #: catalog/templates/catalog/category.html:38
-#: catalog/templates/catalog/product.html:68
+#: catalog/templates/catalog/product.html:72
 msgid "Add to Wish List"
 msgstr "Добавить в список"
 
 #: catalog/templates/catalog/category.html:40
-#: catalog/templates/catalog/product.html:70
+#: catalog/templates/catalog/product.html:74
 msgid "Add to Compare"
 msgstr "Добавить к сравнению"
 
@@ -43,7 +43,7 @@ msgid "Popular products"
 msgstr "Популярные продукты"
 
 #: catalog/templates/catalog/index.html:29
-#: catalog/templates/catalog/product.html:51
+#: catalog/templates/catalog/product.html:55
 msgid "Price:"
 msgstr "Цена:"
 
@@ -67,58 +67,92 @@ msgstr "Введите ваш email"
 msgid "Subscribe"
 msgstr "Подписаться"
 
-#: catalog/templates/catalog/product.html:41
+#: catalog/templates/catalog/product.html:45
 msgid "Brand:"
 msgstr "Изготовитель"
 
-#: catalog/templates/catalog/product.html:42
+#: catalog/templates/catalog/product.html:46
 msgid "Product Code:"
 msgstr "Код товара"
 
-#: catalog/templates/catalog/product.html:43
+#: catalog/templates/catalog/product.html:47
 msgid "Reward Points:"
 msgstr ""
 
-#: catalog/templates/catalog/product.html:44
+#: catalog/templates/catalog/product.html:48
 msgid "Availability:"
 msgstr "Наличие"
 
-#: catalog/templates/catalog/product.html:84
+#: catalog/templates/catalog/product.html:88
 msgid "reviews"
 msgstr "отзывы"
 
-#: catalog/templates/catalog/product.html:84
+#: catalog/templates/catalog/product.html:88
 msgid "Write a review"
 msgstr "Написать отзыв"
 
-#: catalog/templates/catalog/product.html:97
+#: catalog/templates/catalog/product.html:101
 msgid "Description"
 msgstr "Описание"
 
-#: catalog/templates/catalog/product.html:98
+#: catalog/templates/catalog/product.html:102
 msgid "Reviews"
 msgstr "Отзывы"
 
-#: catalog/templates/catalog/product.html:99
+#: catalog/templates/catalog/product.html:103
 msgid "Related products"
 msgstr "Похожие товары"
+
+#: catalog/templates/catalog/block/breadcrumb.html:4
+msgid "Home"
+msgstr "Домой"
 
 #: catalog/templates/catalog/block/categories.html:5
 msgid "Categories"
 msgstr "Категории"
 
-#: core/templates/base.html:52
+#: core/templates/base.html:56
 msgid "Currency"
 msgstr "Валюта"
 
-#: core/templates/base.html:58
+#: core/templates/base.html:62
 msgid "Shopping Cart"
 msgstr "Корзина"
 
-#: core/templates/base.html:115
+#: core/templates/base.html:119
 msgid "Search"
 msgstr "Поиск"
 
-#: core/templates/base.html:116
+#: core/templates/base.html:120
 msgid "Go"
 msgstr "Искать"
+
+#: core/templates/cart/index.html:60
+#: core/templates/cart/one_step_simple.html:64
+msgid "Submit"
+msgstr "Применить"
+
+#: core/templates/cart/index.html:74
+#: core/templates/cart/one_step_simple.html:75
+msgid "Name"
+msgstr "Имя"
+
+#: core/templates/cart/index.html:76
+#: core/templates/cart/one_step_simple.html:77
+msgid "Quantity"
+msgstr "Количество"
+
+#: core/templates/cart/index.html:78
+#: core/templates/cart/one_step_simple.html:79
+msgid "Remove"
+msgstr "Удалить"
+
+#: core/templates/cart/index.html:80
+#: core/templates/cart/one_step_simple.html:81
+msgid "Price"
+msgstr "Цена:"
+
+#: core/templates/cart/index.html:82
+#: core/templates/cart/one_step_simple.html:83
+msgid "Subtotal"
+msgstr "Сумма"

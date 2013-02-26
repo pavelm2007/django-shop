@@ -1,6 +1,7 @@
+{% load i18n %}
 <ul class="breadcrumb">
     <li>
-        <a href="/">Home</a> <span class="divider">/</span>
+        <a href="/">{% trans "Home" %}</a> <span class="divider">/</span>
     </li>
     {% for node in current_category.get_ancestors %}
         <li>

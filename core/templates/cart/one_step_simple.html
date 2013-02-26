@@ -2,6 +2,7 @@
 {% load bootstrap_toolkit %}
 {% block title %} {{ current_category }} {% endblock %}
 {% block content %}
+{% load i18n %}
     <section>
         <style>
             .simpleCart_items table {
@@ -60,7 +61,7 @@
             {% csrf_token %}
             {{ form|as_bootstrap }}
             <div class="actions">
-                <button type="submit" class="btn primary">Submit</button>
+                <button type="submit" class="btn primary">{% trans "Submit" %}</button>
             </div>
         </form>
 
@@ -71,15 +72,15 @@
             cartColumns:[
                 { attr:"image", label:false, view:"image"},
                 //Name of the item
-                { attr:"name", label:"Name" },
+                { attr:"name", label:"{% trans "Name" %}" },
                 //Quantity displayed as an input
-                { attr:"quantity", label:"Quantity", view:"input"},
+                { attr:"quantity", label:"{% trans "Quantity" %}", view:"input"},
                 //Built in view for a remove link
-                { view:'remove', text:"Remove", label:false},
+                { view:'remove', text:"{% trans "Remove" %}", label:false},
                 //Price of item
-                { attr:"price", label:"Price"},
+                { attr:"price", label:"{% trans "Price" %}"},
                 //Subtotal of that row (quantity of that item * the price)
-                { attr:"total", label:"Subtotal", view:"currency"  }
+                { attr:"total", label:"{% trans "Subtotal" %}", view:"currency"  }
             ],
             cartStyle:"table"
         });
