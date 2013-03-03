@@ -7,7 +7,9 @@
         <div class="span3">
             {% include "catalog/block/categories.html" %}
         </div>
-        <div class="span9">{% include "catalog/block/carousel.html" %}</div>
+        {% if carousel_list %}
+            <div class="span9">{% include "catalog/block/carousel.html" %}</div>
+        {% endif %}
         <div class="span7 popular_products">
             <h4>{% trans "Popular products" %}</h4><br/>
             {% if product_list %}

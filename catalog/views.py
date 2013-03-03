@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response, get_object_or_404
-from catalog.models import Product, Category
+from catalog.models import Product, Category, Carousel
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -11,6 +11,7 @@ def index(request):
         {
             'product_list': Product.objects.filter()[:9],
             'nodes': Category.active.all(),
+            'carousel_list': Carousel.objects.all().filter(is_active=True),
         },
         context_instance=RequestContext(request)
     )

@@ -1,30 +1,20 @@
 <div id="myCarousel" class="carousel slide">
     <div class="carousel-inner">
-        <div class="item active">
-            <img src="http://wbpreview.com/previews/WB00223R0/css/images/carousel_1.jpg" alt="">
-            <div class="carousel-caption">
-                <h4>First Thumbnail label</h4>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+        {% for carousel in carousel_list %}
+            <div class="item {% if forloop.first %}active{% endif %}">
+                <a href="{% if carousel.category %}
+                        {% url catalog.views.category carousel.category.slug %}{% elif carousel.product %}
+                        {% url catalog.views.product carousel.product.slug %}{% endif %}">
+                    <img src="{{ MEDIA_URL }}{{ carousel.image }}" alt="{{ carousel.description }}">
+                    {% if carousel.description %}
+                        <div class="carousel-caption">
+                            <p>{{ carousel.description }}</p>
+                        </div>
+                    {% endif %}
+                </a>
             </div>
-
-        </div>
-        <div class="item">
-            <img src="http://wbpreview.com/previews/WB00223R0/css/images/carousel_2.jpg" alt="">
-            <div class="carousel-caption">
-                <h4>Second Thumbnail label</h4>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </div>
-        </div>
-
-        <div class="item">
-            <img src="http://wbpreview.com/previews/WB00223R0/css/images/carousel_3.jpg" alt="">
-            <div class="carousel-caption">
-                <h4>Third Thumbnail label</h4>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
     <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 </div>

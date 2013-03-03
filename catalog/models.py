@@ -125,6 +125,14 @@ class ProductMedia(models.Model):
     is_main = models.BooleanField(default=False)
 
 
+class Carousel(models.Model):
+    name = models.CharField(max_length=255, default="")
+    description = models.TextField(default="", blank=True)
+    image = ImageField(upload_to="carousel/", null=True, blank=True)
+    category = TreeForeignKey('Category', null=True, blank=True)
+    product = models.ForeignKey(Product, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+
 # SIGNALS
 @receiver(pre_save, sender=Product)
 def counters_hook(sender, instance, **kwargs):

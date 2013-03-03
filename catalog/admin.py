@@ -1,4 +1,4 @@
-from catalog.models import Product, ProductMedia, Category, Option
+from catalog.models import Product, ProductMedia, Category, Option, Carousel
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from imperavi.admin import ImperaviAdmin
@@ -63,7 +63,10 @@ class ProductAdmin(AdminImageMixin, ImperaviAdmin):
     inlines = [ProductMediaInline]
 
 
-admin.site.register(Product, ProductAdmin)
+class CarouselAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'category', 'product', 'is_active',)
 
+admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryMPTTModelAdmin)
 admin.site.register(Option, OptionMPTTModelAdmin)
+admin.site.register(Carousel, CarouselAdmin)
