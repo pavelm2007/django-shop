@@ -29,6 +29,7 @@ rm -rf /data/projects/${SITE_NAME}
 
 mkdir /data/projects/${SITE_NAME}
 cd /data/projects/${SITE_NAME}
+cp -r ${SOURCE_DIR} ./django-shop
 mkdir static
 mkdir media
 mkdir logs
@@ -38,7 +39,6 @@ init_site(){
     cd /data/projects/${SITE_NAME};
     virtualenv --system-site-packages env;
     source env/bin/activate;
-    cp -r ${SOURCE_DIR} ./˚
     cd django-shop
     pip install -r requirements.txt
     python manage.py collectstatic --noinput
@@ -58,8 +58,7 @@ DEBUG = False
 " > local_settings.py
 
     # creating a database
-    mysql -h isells.cbiec5vjmqef.us-east-1.rds.amazonaws.com -uroot -pbaster551737 -e "DROP DATABASE IF EXISTS ${SITE_NAME}"
-    mysql -h isells.cbiec5vjmqef.us-east-1.rds.amazonaws.com -uroot -pbaster551737 -e "CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8'"
+    mysql -h isells.cbiec5vjmqef.us-east-1.rds.amazonaws.com -uroot -pbaster551737 -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
     python manage.py syncdb --migrate --noinput
     python manage.py createcachetable my_cache_table
     #python manage.py createsuperuser --username=admin --email=a@dmin.com
