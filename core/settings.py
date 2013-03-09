@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'south',
     'utils',
     'sorl.thumbnail',
+    'bootstrap_toolkit',
     'catalog',
     'compare',
     'cart',
