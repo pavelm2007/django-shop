@@ -24,8 +24,8 @@ else
     SITE_DOMAIN=$3
 fi
 
-
-rm -r /data/projects/${SITE_NAME}
+# That will remove the directory if it's present, otherwise do nothing.
+rm -rf /data/projects/${SITE_NAME}
 
 mkdir /data/projects/${SITE_NAME}
 cd /data/projects/${SITE_NAME}
@@ -38,7 +38,7 @@ init_site(){
     cd /data/projects/${SITE_NAME};
     virtualenv --system-site-packages env;
     source env/bin/activate;
-    cp -r ${SOURCE_DIR} .
+    cp -r ${SOURCE_DIR} ./˚
     cd django-shop
     pip install -r requirements.txt
     python manage.py collectstatic --noinput
