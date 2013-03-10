@@ -112,7 +112,7 @@ chdir = /data/projects/${SITE_NAME}/django-shop/
 touch-reload = /data/projects/${SITE_NAME}/django-shop/reload
 " > /etc/uwsgi/apps-enabled/${SITE_NAME}.ini
 
-service uwsgi start ${SITE_NAME}
+service uwsgi restart ${SITE_NAME}
 service nginx restart
 
 exit 0
