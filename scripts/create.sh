@@ -48,9 +48,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': '${SITE_NAME}',
-        'USER': 'root',
-        'PASSWORD': 'baster551737',
-        'HOST': 'isells.cbiec5vjmqef.us-east-1.rds.amazonaws.com',
+        'USER': 'isells',
+        'PASSWORD': 'vdlk39dG46isells',
+        'HOST': '85.119.157.185',
         'PORT': '',
     }
 }
@@ -58,7 +58,7 @@ DEBUG = False
 " > local_settings.py
 
     # creating a database
-    mysql -h isells.cbiec5vjmqef.us-east-1.rds.amazonaws.com -uroot -pbaster551737 -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
+    mysql -h 85.119.157.185 -uisells -pvdlk39dG46isells -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
     python manage.py syncdb --migrate --noinput
     python manage.py createcachetable my_cache_table
     #python manage.py createsuperuser --username=admin --email=a@dmin.com
