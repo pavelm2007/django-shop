@@ -16,12 +16,20 @@ else
     SITE_NAME=$2
 fi
 
-if test -z "$2"
+if test -z "$3"
 then
     echo "Error: site domain is not set!"
     exit 0
 else
     SITE_DOMAIN=$3
+fi
+
+if test -z "$4"
+then
+    echo "Error: site domain is not set!"
+    exit 0
+else
+    SITE_ID=$4
 fi
 
 # That will remove the directory if it's present, otherwise do nothing.
@@ -114,5 +122,20 @@ touch-reload = /data/projects/${SITE_NAME}/django-shop/reload
 
 service uwsgi restart ${SITE_NAME}
 service nginx restart
+
+# check if site was created successfully
+res=`curl -s -I http://${SITE_DOMAIN} | grep HTTP/1.1 | awk {'print $2'}`
+if [ ${res} -ne 200 ]
+then
+    echo "Error site creation was not created successfully"
+fi
+
+# active site
+# todo: rewrite this code
+res=`curl -s -I http://isells.eu/shop/create_success/${SITE_ID}/ | grep HTTP/1.1 | awk {'print $2'}`
+if [ ${res} -ne 200 ]
+then
+    echo "Error active site was nor successfully"
+fi
 
 exit 0
