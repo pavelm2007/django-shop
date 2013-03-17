@@ -8,3 +8,4 @@ pytils
 sorl-thumbnail
 django-imperavi
 feincms
+drest
