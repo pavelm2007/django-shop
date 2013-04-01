@@ -104,6 +104,11 @@ server {
         alias /data/projects/${SITE_NAME}/static/;
     }
 }
+server {
+     listen  80;
+     server_name www.${SITE_DOMAIN};
+     rewrite ^ http://${SITE_DOMAIN}$request_uri? permanent; #301 redirect
+}
 " > /etc/nginx/sites-enabled/${SITE_NAME}
 
 # adding uwsgi config
