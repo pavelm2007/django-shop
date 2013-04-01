@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load apptags %}
 {% load thumbnail %}
 {% block title %} {{ current_category }} {% endblock %}
 {% block content %}
@@ -28,8 +29,7 @@
                                 </a>
 
                                 <div class="caption">
-                                    <a href="{% url catalog.views.product product.slug %}"><h5>{{ product }}</h5></a> {% trans "Price:" %}
-                                    &#36;50.00<br/><br/>
+                                    <a href="{% url catalog.views.product product.slug %}"><h5>{{ product }}</h5></a> {% trans "Price:" %} {{ product.price|money }}<br/>
                                 </div>
                             </div>
                         </li>

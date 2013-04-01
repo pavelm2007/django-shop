@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load humanize %}
-{% load i18n %}
+{% load i18n apptags %}
 {% block title %} {{ current_category }} {% endblock %}
 {% block content %}
     <div class="row">
@@ -29,7 +28,7 @@
                         </div>
 
                         <div class="span1 item_price">
-                            <p>${{ product.price|intcomma }}</p>
+                            <p>{{ product.price|money }}</p>
                         </div>
 
                         <div class="span2">

@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load humanize %}
-{% load i18n %}
+{% load i18n apptags %}
 {% block title %} {{ product }} {% endblock %}
 {% block content %}
     <div class="row simpleCart_shelfItem" itemscope itemtype="http://data-vocabulary.org/Product">
@@ -52,7 +51,7 @@
                     <div itemprop="offerDetails" itemscope itemtype="http://data-vocabulary.org/Offer" class="span6">
                         <meta itemprop="currency" content="USD" />
                         <h2 itemprop="availability" content="in_stock">
-                            <strong >{% trans "Price:" %}<span itemprop="price" class="item_price">${{ product.price|intcomma }}</span></strong>
+                            <strong>{% trans "Price:" %} <span itemprop="price" class="item_price">{{ product.price|money }}</span></strong>
                             <small>Ex Tax: $500.00</small>
                             <br/><br/>
                         </h2>

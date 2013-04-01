@@ -5,7 +5,7 @@ from xml.etree.ElementTree import Element, SubElement, Comment, tostring
 from core.models import Setting
 from catalog.models import Category, Product
 
-# Create your views here.
+
 def yml(request):
     # loading shop settings
     shop_settings = Setting.objects.filter(is_active=True)[0]

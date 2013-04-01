@@ -1,8 +1,8 @@
-from catalog.models import Category
+from django.conf import settings
 def catalog(request):
     return {
-        #    'active_categories': Category.active.all(),
-        #    'site_name': settings.SITE_NAME,
+        #    '/active_categories': Category.active.all(),
+             'settings': settings,
         #    'meta_keywords': settings.META_KEYWORDS,
         #    'meta_description': settings.META_DESCRIPTION,
         #    'request': request

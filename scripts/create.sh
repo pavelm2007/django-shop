@@ -2,7 +2,7 @@
 
 if test -z "$1"
 then
-    echo "Error: site name is not set!"
+    echo "Error: teamcity.build.checkoutDir is not set!"
     exit 0
 else
     SOURCE_DIR=$1
@@ -26,10 +26,26 @@ fi
 
 if test -z "$4"
 then
-    echo "Error: site domain is not set!"
+    echo "Error: site_id domain is not set!"
     exit 0
 else
     SITE_ID=$4
+fi
+
+if test -z "$5"
+then
+    echo "Error: country domain is not set!"
+    exit 0
+else
+    COUNTRY=$5
+fi
+
+if test -z "$6"
+then
+    echo "Error: country domain is not set!"
+    exit 0
+else
+    CURRENCY=$6
 fi
 
 # That will remove the directory if it's present, otherwise do nothing.
@@ -68,11 +84,15 @@ DEBUG = False
     # creating a database
     mysql -h 85.119.157.185 -uisells -pvdlk39dG46isells -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
     python manage.py syncdb --migrate --noinput
-    python manage.py createcachetable my_cache_table
+    #python manage.py createcachetable my_cache_table
     #python manage.py createsuperuser --username=admin --email=a@dmin.com
 
     # adding a Django super-user
     echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@${SITE_DOMAIN}', 'admin')" | python manage.py shell
+
+    # init ORM-based site-settings
+    echo "from core.models import Setting; Setting.objects.create(currency='${CURRENCY}')" | python manage.py shell
+    python manage.py initsettings
 
     # importing a demo products
     python manage.py importyml /data/isells/isells/scripts/demo_site_data_yml.xml --images

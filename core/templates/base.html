@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-{% load bootstrap_toolkit %}
-{% load mptt_tags %}
-{% load static %}
-{% load i18n %}
+{% load bootstrap_toolkit mptt_tags static i18n %}
 {% get_static_prefix as STATIC_URL %}
 <html lang="en">
 <head>
@@ -20,14 +17,21 @@
     <script src="{{ STATIC_URL }}js/simpleCart.min.js"></script>
     <script>
         simpleCart({
-            checkout: {
-                type: "PayPal",
-                email: "you@yours.com"
-            },
             currency:   "USD"
         });
     </script>
-
+    {% if settings.CURRENCY == 'UAH' %}
+        <script>
+            simpleCart.currency({
+                code: "UAH" ,
+                symbol: "&nbsp;грн" ,
+                delimiter: "&nbsp;" ,
+                decimal: "," ,
+                after: true ,
+                accuracy: 2
+            });
+        </script>
+    {% endif %}
     <!-- fancybox -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css" type="text/css" media="screen" />
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.pack.js"></script>
@@ -39,7 +43,6 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-
 <div class="container">
     <div class="row"><!-- start header -->
         <div class="span4 logo">
@@ -50,14 +53,7 @@
         <div class="span8">
 
             <div class="row">
-                <div class="span1">&nbsp;</div>
-                <div class="span2">
-                    <h4>{% trans "Currency" %}</h4>
-                    <a href="#">USD</a> |
-                    <a href="#"><strong>GBP</strong></a> |
-                    <a href="#">EUR</a>
-                </div>
-                <div class="span2">
+                <div class="offset3 span2">
                     <a href="/cart/simple/"><h4>{% trans "Shopping Cart" %}</h4></a>
                     <a href="/cart/simple/"><span class="simpleCart_quantity"></span> item(s) - <span class="simpleCart_total"></span></a>
                 </div>
@@ -73,6 +69,7 @@
             <div class="row">
                 <div class="links pull-right">
                     <a href="index.html">Home</a> |
+
                     <a href="my_account.html">My Account</a> |
                     <a href="cart.html">Shopping Cart</a> |
                     <a href="two-column.html">About</a> |
