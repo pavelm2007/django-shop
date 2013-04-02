@@ -67,20 +67,6 @@ init_site(){
     pip install -r requirements.txt
     python manage.py collectstatic --noinput
 
-echo "
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': '${SITE_NAME}',
-        'USER': 'isells',
-        'PASSWORD': 'vdlk39dG46isells',
-        'HOST': '85.119.157.185',
-        'PORT': '',
-    }
-}
-DEBUG = False
-" > local_settings.py
-
     # creating a database
     mysql -h 85.119.157.185 -uisells -pvdlk39dG46isells -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
     python manage.py syncdb --migrate --noinput
@@ -92,7 +78,7 @@ DEBUG = False
 
     # init ORM-based site-settings
     echo "from core.models import Setting; Setting.objects.create(currency='${CURRENCY}')" | python manage.py shell
-    python manage.py initsettings
+    python manage.py init_local_sessings
 
     # importing a demo products
     python manage.py importyml /data/isells/isells/scripts/demo_site_data_yml.xml --images
@@ -125,9 +111,8 @@ server {
     }
 }
 server {
-     listen  80;
      server_name www.${SITE_DOMAIN};
-     rewrite ^ http://${SITE_DOMAIN}$request_uri? permanent; #301 redirect
+     rewrite ^ http://${SITE_DOMAIN}\$request_uri permanent; #301 redirect
 }
 " > /etc/nginx/sites-enabled/${SITE_NAME}
 
