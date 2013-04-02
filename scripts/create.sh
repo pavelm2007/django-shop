@@ -42,7 +42,7 @@ fi
 
 if test -z "$6"
 then
-    echo "Error: country domain is not set!"
+    echo "Error: currency is not set!"
     exit 0
 else
     CURRENCY=$6
@@ -89,8 +89,7 @@ DATABASES = {
     echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@${SITE_DOMAIN}', 'admin')" | python manage.py shell
 
     # init ORM-based site-settings
-    echo "from core.models import Setting; Setting.objects.create(currency='${CURRENCY}')"
-    echo "from core.models import Setting; Setting.objects.create(currency='${CURRENCY}')" | python manage.py shell
+    echo "from core.models import Setting; Setting.objects.create(currency=\'${CURRENCY}\')" | python manage.py shell
     python manage.py init_local_sessings
 
     # importing a demo products
