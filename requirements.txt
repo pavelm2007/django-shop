@@ -2,7 +2,7 @@ Django==1.4.5
 South==0.7.6
 django-mptt
 django-debug-toolbar
-django-bootstrap-toolkit
+django-bootstrap-toolkit==2.6.23
 django-autoslug
 pytils
 sorl-thumbnail
