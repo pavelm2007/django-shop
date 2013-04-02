@@ -19,4 +19,4 @@ export -f update_site
 su www-data -c "bash -c update_site"
 
 service uwsgi restart ${SITE_NAME}
-service nginx force-reload
+#service nginx force-reload
