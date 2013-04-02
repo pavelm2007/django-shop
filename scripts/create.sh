@@ -89,14 +89,15 @@ DATABASES = {
     echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@${SITE_DOMAIN}', 'admin')" | python manage.py shell
 
     # init ORM-based site-settings
-    echo "from core.models import Setting; Setting.objects.create(currency=\'${CURRENCY}\')" | python manage.py shell
+    echo "from core.models import Setting; Setting.objects.create(currency='${CURRENCY}')" | python manage.py shell
     python manage.py init_local_sessings
 
     # importing a demo products
     python manage.py importyml /data/isells/isells/scripts/demo_site_data_yml.xml --images
 }
-
+˚
 export SITE_NAME=${SITE_NAME}
+export CURRENCY=${CURRENCY}
 export -f init_site
 
 su www-data -c "bash -c init_site"
