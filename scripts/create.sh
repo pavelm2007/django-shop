@@ -89,6 +89,7 @@ DATABASES = {
     echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@${SITE_DOMAIN}', 'admin')" | python manage.py shell
 
     # init ORM-based site-settings
+    echo "from core.models import Setting; Setting.objects.create(currency='${CURRENCY}')"
     echo "from core.models import Setting; Setting.objects.create(currency='${CURRENCY}')" | python manage.py shell
     python manage.py init_local_sessings
 
