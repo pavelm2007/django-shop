@@ -95,7 +95,7 @@ DATABASES = {
     # importing a demo products
     python manage.py importyml /data/isells/isells/scripts/demo_site_data_yml.xml --images
 }
-˚
+
 export SITE_NAME=${SITE_NAME}
 export CURRENCY=${CURRENCY}
 export -f init_site
