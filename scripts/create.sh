@@ -68,16 +68,16 @@ init_site(){
     python manage.py collectstatic --noinput
 
     echo "
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': '${SITE_NAME}',
-            'USER': 'isells',
-            'PASSWORD': 'vdlk39dG46isells',
-            'HOST': '85.119.157.185',
-            'PORT': '',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '${SITE_NAME}',
+        'USER': 'isells',
+        'PASSWORD': 'vdlk39dG46isells',
+        'HOST': '85.119.157.185',
+        'PORT': '',
     }
+}
     " > local_settings.py
     # creating a database
     mysql -h 85.119.157.185 -uisells -pvdlk39dG46isells -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
