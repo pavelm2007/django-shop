@@ -30,7 +30,7 @@ class Command(BaseCommand):
         local_setting.write("LANGUAGES = (('%s', '%s'),)" % ('ru', 'Russian') + '\n')
 
         # currency
-        local_setting.write("CURRENCY = '%s'" % 'ru' + '\n')
+        local_setting.write("CURRENCY = '%s'" % orm_settings.currency + '\n')
 
         # database
         # todo: rewrite this hack
