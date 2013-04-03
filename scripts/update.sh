@@ -17,7 +17,7 @@ fi
 HOME_PATH=/data/projects
 cd ${HOME_PATH}/${SITE_NAME}
 cp django-shop/local_settings.py local_settings.py.tmp
-    rm -fr ${HOME_PATH}/${SITE_NAME}/django-shop
+rm -fr ${HOME_PATH}/${SITE_NAME}/django-shop
 cp -r ${SOURCE_DIR} ./django-shop
 mv local_settings.py.tmp django-shop/local_settings.py
 sudo chown -R www-data:www-data ${HOME_PATH}/${SITE_NAME}/django-shop
