@@ -42,10 +42,10 @@ fi
 
 if test -z "$6"
 then
-    echo "Error: currency is not set!"
+    echo "Error: settings is not set!"
     exit 0
 else
-    CURRENCY=$6
+    SETTINGS=$6
 fi
 
 # That will remove the directory if it's present, otherwise do nothing.
@@ -67,37 +67,20 @@ init_site(){
     pip install -r requirements.txt
     python manage.py collectstatic --noinput
 
-    echo "
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': '${SITE_NAME}',
-        'USER': 'isells',
-        'PASSWORD': 'vdlk39dG46isells',
-        'HOST': '85.119.157.185',
-        'PORT': '',
-    }
-}
-    " > local_settings.py
+    echo ${SETTINGS} > local_settings.py
     # creating a database
     mysql -h 85.119.157.185 -uisells -pvdlk39dG46isells -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
     python manage.py syncdb --migrate --noinput
-    #python manage.py createcachetable my_cache_table
-    #python manage.py createsuperuser --username=admin --email=a@dmin.com
 
     # adding a Django super-user
     echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@${SITE_DOMAIN}', 'admin')" | python manage.py shell
-
-    # init ORM-based site-settings
-    echo "from core.models import Setting; Setting.objects.create(currency='${CURRENCY}')" | python manage.py shell
-    python manage.py init_local_sessings
 
     # importing a demo products
     python manage.py importyml /data/isells/isells/scripts/demo_site_data_yml.xml --images
 }
 
 export SITE_NAME=${SITE_NAME}
-export CURRENCY=${CURRENCY}
+export SETTINGS=${SETTINGS}
 export -f init_site
 
 su www-data -c "bash -c init_site"
