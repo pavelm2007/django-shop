@@ -2,13 +2,12 @@ from core.settings import MEDIA_URL
 from django.http import HttpResponse
 from django.contrib.sites.models import get_current_site
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-from core.models import Setting
 from catalog.models import Category, Product
+from django.conf import settings
+
 
 
 def yml(request):
-    # loading shop settings
-    shop_settings = Setting.objects.filter(is_active=True)[0]
 
     # creating root elements
     yml_catalog = Element('yml_catalog')
@@ -18,7 +17,7 @@ def yml(request):
     # currency for site-settings
     currencies = SubElement(shop, 'currencies')
     currency = SubElement(currencies, 'currency')
-    currency.set('id', shop_settings.currency)
+    currency.set('id', settings.CURRENCY)
     currency.set('rate', "1")
     currency.set('plus', "0")
 
@@ -46,7 +45,7 @@ def yml(request):
         price.text = str(product.price)
 
         currency_id = SubElement(offer, 'currencyId')
-        currency_id.text = str(shop_settings.currency)
+        currency_id.text = str(settings.CURRENCY)
 
         category_id = SubElement(offer, 'categoryId')
         category_id.text = str(product.category_id)
