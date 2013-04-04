@@ -32,14 +32,6 @@ else
     SITE_ID=$4
 fi
 
-if test -z "$5"
-then
-    echo "Error: settings is not set!"
-    exit 0
-else
-    SETTINGS=$5
-fi
-
 # That will remove the directory if it's present, otherwise do nothing.
 rm -rf /data/projects/${SITE_NAME}
 
@@ -59,7 +51,8 @@ init_site(){
     pip install -r requirements.txt
     python manage.py collectstatic --noinput
 
-    echo ${SETTINGS} > local_settings.py
+    echo "%settings%" > local_settings.py
+
     # creating a database
     mysql -h 85.119.157.185 -uisells -pvdlk39dG46isells -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
     python manage.py syncdb --migrate --noinput
@@ -72,7 +65,6 @@ init_site(){
 }
 
 export SITE_NAME=${SITE_NAME}
-export SETTINGS=${SETTINGS}
 export -f init_site
 
 su www-data -c "bash -c init_site"

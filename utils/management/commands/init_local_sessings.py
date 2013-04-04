@@ -25,7 +25,6 @@ class Command(BaseCommand):
         local_setting.write("TIME_ZONE = '%s'" % 'Europe/Kiev' + '\n')
 
         # language
-        local_setting.write("DEFAULT_LANGUAGE = 1" + '\n')
         local_setting.write("LANGUAGE_CODE = '%s'" % 'ru' + '\n')
         local_setting.write("LANGUAGES = (('%s', '%s'),)" % ('ru', 'Russian') + '\n')
 
