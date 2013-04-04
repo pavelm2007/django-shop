@@ -34,18 +34,10 @@ fi
 
 if test -z "$5"
 then
-    echo "Error: country domain is not set!"
-    exit 0
-else
-    COUNTRY=$5
-fi
-
-if test -z "$6"
-then
     echo "Error: settings is not set!"
     exit 0
 else
-    SETTINGS=$6
+    SETTINGS=$5
 fi
 
 # That will remove the directory if it's present, otherwise do nothing.
