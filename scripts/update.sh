@@ -14,13 +14,18 @@ then
 else
     SITE_NAME=$2
 fi
+
 HOME_PATH=/data/projects
+
 cd ${HOME_PATH}/${SITE_NAME}
+
 cp django-shop/local_settings.py local_settings.py.tmp
 rm -fr ${HOME_PATH}/${SITE_NAME}/django-shop
 cp -r ${SOURCE_DIR} ./django-shop
 mv local_settings.py.tmp django-shop/local_settings.py
+
 sudo chown -R www-data:www-data ${HOME_PATH}/${SITE_NAME}/django-shop
+
 update_site(){
     cd ${HOME_PATH}/${SITE_NAME}
     source env/bin/activate
@@ -28,6 +33,9 @@ update_site(){
     pip install -r requirements.txt
     python manage.py collectstatic --noinput
 }
+export HOME_PATH=${HOME_PATH}
+export SITE_NAME=${SITE_NAME}
+
 export -f update_site
 
 su www-data -c "bash -c update_site"
