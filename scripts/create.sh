@@ -41,6 +41,9 @@ cp -r ${SOURCE_DIR} ./django-shop
 mkdir static
 mkdir media
 mkdir logs
+# assign config from prev build step
+mv /tmp/local_settings_${SITE_ID}.py django-shop/local_settings.py
+
 sudo chown -R www-data:www-data /data/projects/${SITE_NAME}
 
 init_site(){
@@ -50,9 +53,6 @@ init_site(){
     cd django-shop
     pip install -r requirements.txt
     python manage.py collectstatic --noinput
-
-    # assign config from prev build step
-    mv /tmp/local_settings_${SITE_ID}.py local_settings.py
 
     # creating a database
     mysql -h 85.119.157.185 -uisells -pvdlk39dG46isells -e "DROP DATABASE IF EXISTS ${SITE_NAME}; CREATE DATABASE ${SITE_NAME} CHARACTER SET='utf8';"
