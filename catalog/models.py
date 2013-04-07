@@ -182,10 +182,15 @@ def product_image(sender, instance, **kwargs):
 @receiver(post_delete, sender=ProductMedia)
 def product_image_delete(sender, instance, **kwargs):
     if instance.is_main:
-        if instance.product.productmedia_set.exclude(image=None).count() > 0:
-            product_image = instance.product.productmedia_set.exclude(image=None).all()[0]
+        try:
+            product = instance.product
+        except Product.DoesNotExist:
+            return False
+
+        if product.productmedia_set.exclude(image=None).count() > 0:
+            product_image = product.productmedia_set.exclude(image=None).all()[0]
             product_image.is_main = True
             product_image.save()
         else:
-            instance.product.image = None
-            instance.product.save()
+            product.image = None
+            product.save()
