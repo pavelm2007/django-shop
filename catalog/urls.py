@@ -15,5 +15,6 @@ sitemaps = {
 }
 
 urlpatterns += patterns('',
-    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    url(r'^robots\.txt$', 'catalog.views.robots'),
 )

@@ -83,3 +83,12 @@ def product(request, product_slug):
         print("Either the category doesn't exist." + product.category)
 
     return render_to_response('catalog/product.html', locals(), context_instance=RequestContext(request))
+
+
+def robots(request):
+    from django.http import HttpResponse
+
+    if settings.SITE_PUBLIC:
+        return HttpResponse("User-agent: *\nDisallow: /admin/\nSitemap: http://%s/sitemap.xml" % request.get_host(), mimetype="text/plain")
+    else:
+        return HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")
