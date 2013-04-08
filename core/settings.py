@@ -128,7 +128,7 @@ TEMPLATE_DIRS = (
 )
 
 LOCALE_PATHS = (os.path.join(PROJECT_DIR, 'locale'), )
-
+SITE_PUBLIC = True
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
